@@ -15,8 +15,7 @@ export const UserSlice = createSlice({
       switch(action.type){
         case 'FETCH_LOADING':
             return{
-              ...state,
-              data :[],
+              ...state, 
               loading : 'loading'
             }
         case 'FETCH_SUCCESS':
@@ -32,7 +31,7 @@ export const UserSlice = createSlice({
         default :
           return{
             ...state,
-            data : state.data,
+            data : action.payload,
             error : "case error",
             loading : "case loading"
           }

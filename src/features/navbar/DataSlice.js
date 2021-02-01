@@ -27,14 +27,14 @@ export const UserSlice = createSlice({
         case 'FETCH_ERROR':
           return{
             ...state,
-            data : [],
             error : action.payload
           }
         default :
           return{
             ...state,
             data : state.data,
-            error : state.error
+            error : "case error",
+            loading : "case loading"
           }
       }
     }
@@ -49,7 +49,6 @@ export const UserSlice = createSlice({
 const FETCH_LOADING = () =>{
   return{
     type : 'FETCH_LOADING',
-
   }
 }
 const FETCH_SUCCESS = data =>{
@@ -86,7 +85,7 @@ export const fetchCustomer = () =>{
 export const fetchMezzi = () =>{
   return (dispatch) =>{
     dispatch(FETCH_LOADING())
-    axios.get(`http://localhost:8050/utenti/customer`)
+    axios.get(`http://localhost:8050/mezzi/catalogo`)
     .then(response =>{
       dispatch(FETCH_SUCCESS(response.data))
     })
@@ -99,7 +98,7 @@ export const fetchMezzi = () =>{
 export const fetchPrenotazioni = () =>{
   return (dispatch) =>{
     dispatch(FETCH_LOADING())
-    axios.get(`http://localhost:8050/utenti/customer`)
+    axios.get(`http://localhost:8050/prenotazioni`)
     .then(response =>{
       dispatch(FETCH_SUCCESS(response.data))
     })

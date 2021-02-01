@@ -10,10 +10,10 @@ export function Navbar({ fetchCustomer, data }){
    /*  const Aggiungi =()=>{
         dispatch(addText({value : 'gino'}))
     } */
-
-    useEffect(()=>{
+    const dispatch = useDispatch()
+/*     useEffect(()=>{
         fetchCustomer()
-    },[])
+    },[]) */
     return data.loading ?(
        /*  <div>
             <button onClick={()=>dispatch(utenti())}>Utenti</button>
@@ -38,6 +38,7 @@ export function Navbar({ fetchCustomer, data }){
             {
                 data && data.data && data.data.map(user=> <p>{user.nome}</p>)
             }
+            <button onClick={()=>dispatch(fetchMezzi())}>prova</button>
         </div>
     )
 }

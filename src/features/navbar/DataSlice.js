@@ -3,8 +3,8 @@ import axios from 'axios'
 
 const initialState = {
   data : [],
-  error : 'errore default',
-  loading : 'loading defult'
+  error : undefined,
+  loading : undefined
 }
 
 export const UserSlice = createSlice({
@@ -12,15 +12,16 @@ export const UserSlice = createSlice({
   initialState,
   reducers: {
     DataReducer : (state = initialState, action) =>{
-      switch(action.type){
+      switch(action.payload.type){
         case 'FETCH_LOADING':
             return{
               ...state, 
-              loading : 'loading'
+              loading : 'Loading'
             }
         case 'FETCH_SUCCESS':
           return{
             ...state,
+            loading : 'Loaded',
             data : action.payload,
           }
         case 'FETCH_ERROR':
@@ -70,13 +71,16 @@ const FETCH_FAIL = error =>{
 //------------------------------------------------//
 export const fetchCustomer = () =>{
   return (dispatch) =>{
-    dispatch(FETCH_LOADING())
+ //   dispatch(FETCH_LOADING())
+    dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/utenti/customer`)
     .then(response =>{
-      dispatch(FETCH_SUCCESS(response.data))
+  //    dispatch(FETCH_SUCCESS(response.data))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
     })
     .catch( (error) =>{
-      dispatch(FETCH_FAIL(error.message))
+     // dispatch(FETCH_FAIL(error.message))
+      dispatch(DataReducer(FETCH_FAIL(error.message)))
     })
   }
 }
@@ -107,5 +111,5 @@ export const fetchPrenotazioni = () =>{
   }
 }
 
-export const getMes =(state)=>{ return state.a};
+export const { DataReducer } = UserSlice.actions
 export default UserSlice.reducer;

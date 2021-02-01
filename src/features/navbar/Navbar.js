@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchCustomer, fetchMezzi, fetchPrenotazioni, getMes, UserSlice} from './DataSlice'
+import {fetchCustomer, fetchMezzi, fetchPrenotazioni, DataReducer} from './DataSlice'
 
 export function Navbar({ fetchCustomer, data }){
     const dispatch = useDispatch()
 /*     useEffect(()=>{
         fetchCustomer()
     },[]) */
-    return data.loading ? (
+    return data.loading ?(
         <p>Loading...</p>
-    ) : data.error ? (
+    ) : data.error ? null (
         <p>Errore...</p>
     ) : (
         <div>
-            {data && data.data && data.data.map(user => <p>{user.nome}</p>)}
-            <button onClick={() => dispatch(fetchMezzi())}>prova</button>
+            {data.data && data.data.payload && data.data.payload.map(user => <p>{user.nome}</p>)}
+            <button onClick={() => dispatch(fetchCustomer())}>prova</button>
         </div>
             )
 }
@@ -23,7 +23,7 @@ export function Navbar({ fetchCustomer, data }){
 
 const MapMsgToProps = state =>{
     return{
-        data : state
+        data : state.type
     }
 }
 

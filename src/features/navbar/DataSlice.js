@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
 
+const initialState = {
+  data : [],
+  error : null,
+  loading : null
+}
+
 export const UserSlice = createSlice({
   name: 'dataType',
-  initialState: {
-    data : [],
-    error : null,
-    loading : null
-  },
+  initialState,
   reducers: {
-    DataReducer : (state, action) =>{
+    DataReducer : (state = initialState, action) =>{
       switch(action.type){
         case 'FETCH_LOADING':
             return{
@@ -106,4 +108,5 @@ export const fetchPrenotazioni = () =>{
   }
 }
 
+export const getMes =(state)=>{ return state.data};
 export default UserSlice.reducer;

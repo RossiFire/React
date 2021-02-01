@@ -3,8 +3,8 @@ import axios from 'axios'
 
 const initialState = {
   data : [],
-  error : null,
-  loading : null
+  error : 'errore default',
+  loading : 'loading defult'
 }
 
 export const UserSlice = createSlice({
@@ -22,7 +22,7 @@ export const UserSlice = createSlice({
         case 'FETCH_SUCCESS':
           return{
             ...state,
-            data : action.payload
+            data : action.payload,
           }
         case 'FETCH_ERROR':
           return{
@@ -48,7 +48,8 @@ export const UserSlice = createSlice({
 // User Actions
 const FETCH_LOADING = () =>{
   return{
-    type : 'FETCH_LOADING'
+    type : 'FETCH_LOADING',
+
   }
 }
 const FETCH_SUCCESS = data =>{
@@ -108,5 +109,5 @@ export const fetchPrenotazioni = () =>{
   }
 }
 
-export const getMes =(state)=>{ return state.data};
+export const getMes =(state)=>{ return state.a};
 export default UserSlice.reducer;

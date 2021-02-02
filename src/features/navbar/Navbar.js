@@ -7,7 +7,6 @@ import {Navbar, ToggleButton, NavbarBrand, Collapse, Nav} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-
 export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }){
     const dispatch = useDispatch()
     return(
@@ -45,18 +44,18 @@ export function Table(){
         <tbody>
             {dt.data.payload.map(col => 
             <tr>{dt.data.head.map(dato => 
-                <td key={dato.col}>{dato.col}</td>)}
+                <td key={dato[col]}>{dato[col]}</td>)}
             </tr>)}
         </tbody>
     </table>
     }
-    return dt.loading ?(
-        <p>Loading...</p>
-    ) : dt.error ? (
-        <p>Errore</p>
-    ) : (
-        <div>
-            {TB}
+
+    return(
+        <div className="AppTable">
+            {  dt.loading ? <p>Loading...</p>
+             : dt.error ? <p>Errore</p>
+             : TB
+            }
         </div>
     )
 }

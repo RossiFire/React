@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './navbar.css'
+import Table from '../../Table/Table'
 import { connect } from 'react-redux'
-import { useSelector, useDispatch } from 'react-redux';
-import {fetchCustomer, fetchMezzi, fetchPrenotazioni, DataReducer} from './DataSlice'
-import {Navbar, ToggleButton, NavbarBrand, Collapse, Nav} from 'react-bootstrap'
+import { useDispatch } from 'react-redux';
+import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from './DataSlice'
+import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
@@ -22,44 +23,11 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
-
-
-            <Table data={data}/>
+            <Table/>
         </div>
 
             )
 }
-
-export function Table(){
-    const dt = useSelector(state => state.type)
-    let TB = ''
-    if(dt.data.head){
-    TB =
-    <table>
-        <thead>
-        <tr>
-            {dt.data.head.map(col => <th key={col}>{col}</th>)}
-        </tr>
-        </thead>
-        <tbody>
-            {dt.data.payload.map(col => 
-            <tr>{dt.data.head.map(dato => 
-                <td key={dato[col]}>{dato[col]}</td>)}
-            </tr>)}
-        </tbody>
-    </table>
-    }
-
-    return(
-        <div className="AppTable">
-            {  dt.loading ? <p>Loading...</p>
-             : dt.error ? <p>Errore</p>
-             : TB
-            }
-        </div>
-    )
-}
-
 
 
 const MapStateToProps = state =>{

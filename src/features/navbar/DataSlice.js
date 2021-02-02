@@ -5,7 +5,8 @@ const initialState = {
   data : [],
   error : undefined,
   loading : undefined,
-  head : []
+  head : [],
+  typeData : undefined
 }
 
 export const UserSlice = createSlice({
@@ -25,7 +26,8 @@ export const UserSlice = createSlice({
             ...state,
             loading : undefined,
             data : action.payload,
-            head : action.head
+            head : action.head,
+            typeData : action.typeData
           }
         case 'FETCH_ERROR':
           return{
@@ -56,11 +58,12 @@ const FETCH_LOADING = () =>{
     head : []
   }
 }
-const FETCH_SUCCESS = (data, head) =>{
+const FETCH_SUCCESS = (data, head, TypeData) =>{
   return{
     type : 'FETCH_SUCCESS',
     payload : data,
-    head : head
+    head : head,
+    typeData : TypeData
   }
 }
 
@@ -80,7 +83,7 @@ export const fetchCustomer = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/utenti/customer`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','nome','cognome','nascita','password'])))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','nome','cognome','nascita','password','azioni'], 'CUSTOMER')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -93,7 +96,7 @@ export const fetchMezzi = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/mezzi/catalogo`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','casaCostr','tipomezzo','modello','targa'])))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','casaCostr','tipomezzo','modello','targa','azioni'], 'MEZZI')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -106,7 +109,7 @@ export const fetchPrenotazioni = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/prenotazioni`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato'])))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato','azioni'], 'PRENOTAZIONI')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))

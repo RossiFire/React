@@ -1,0 +1,16 @@
+.AppTable{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+table{
+    text-align: center;
+    border: 2px solid lightblue;
+}
+table tr *{
+    padding: 5px 10px;
+}
+table button{
+    border-radius: 0 !important;
+}

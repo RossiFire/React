@@ -1,0 +1,26 @@
+.form{
+    position: relative;
+    border: 1px solid blueviolet;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.form-body{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.form-body input{
+    flex: 1 0 21%;
+    border-radius: 0px;
+    margin: 10px;
+    border: none;
+    border: 1px solid fuchsia;
+    color: rgb(60, 192, 185);
+}
+.form-body input:focus{
+    outline: none;
+}

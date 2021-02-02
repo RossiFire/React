@@ -1,45 +1,56 @@
 import React, { useState, useEffect } from 'react';
+import './navbar.css'
 import { connect } from 'react-redux'
 import { useSelector, useDispatch } from 'react-redux';
 import {fetchCustomer, fetchMezzi, fetchPrenotazioni, DataReducer} from './DataSlice'
-import { Tapable } from 'tapable';
+import {Navbar, ToggleButton, NavbarBrand, Collapse, Nav} from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-export function Navbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }){
+
+
+export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }){
     const dispatch = useDispatch()
-    return data.loading ?(
-        <p>Loading...</p>
-    ) : data.error ? (
-        <p>Errore</p>
-    ) : (
+    return(
         <div>
-            <div>
-            {data.data && data.data.payload && data.data.payload.map(user => <p key={user.id}>{user.nome}</p>)}
-            </div>
-            <button onClick={() => dispatch(()=>fetchCustomer())}>Customer</button>
-            <button onClick={() => dispatch(()=>fetchMezzi())}>Mezzi</button>
-            <button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button>
+            <Navbar expand="sm" className="navbar">
+                <Navbar.Brand href="#home">Home</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link><button onClick={() => dispatch(()=>fetchCustomer())}>Customer</button></Nav.Link>
+                        <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
+                        <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+
+
+            <Table data={data}/>
         </div>
+
             )
 }
 
-export function Table({ fetchCustomer, data}){
-    let dt = undefined;
-
-    return dt ? (
-        <p>Waiting</p>
+export function Table(props){
+    let dt = props.data
+    return dt.loading ?(
+        <p>Loading...</p>
+    ) : dt.error ? (
+        <p>Errore</p>
     ) : (
-        <table>
-
-        </table>
+        <div>
+        {dt.data && dt.data.payload && dt.data.payload.map(user => <p key={user.id}>{user.id}</p>)}
+    </div>
     )
 }
 
-const MapMsgToProps = state =>{
+
+
+const MapStateToProps = state =>{
     return{
         data : state.type
     }
 }
-
 const MapDispatchProps = dispatch =>{
     return{
         fetchCustomer : ()=> dispatch(fetchCustomer()),
@@ -47,4 +58,4 @@ const MapDispatchProps = dispatch =>{
         fetchPrenotazioni : ()=> dispatch(fetchPrenotazioni())
     }
 }
-export default connect(MapMsgToProps, MapDispatchProps)(Navbar);
+export default connect(MapStateToProps, MapDispatchProps)(AppNavbar);

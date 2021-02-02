@@ -1,0 +1,16 @@
+.navbar{
+    background-color: rgb(58, 80, 141) !important;
+}
+.mr-auto *{
+    color: rgb(221, 82, 40) !important;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+button{
+    border: none;
+    background-color: transparent;
+}
+
+table{
+    position: absolute;
+}

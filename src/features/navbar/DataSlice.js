@@ -16,7 +16,8 @@ export const UserSlice = createSlice({
         case 'FETCH_LOADING':
             return{
               ...state, 
-              loading : 'Loading'
+              loading : 'Loading',
+              data : action.payload
             }
         case 'FETCH_SUCCESS':
           return{
@@ -49,6 +50,7 @@ export const UserSlice = createSlice({
 const FETCH_LOADING = () =>{
   return{
     type : 'FETCH_LOADING',
+    payload : []
   }
 }
 const FETCH_SUCCESS = data =>{

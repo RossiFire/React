@@ -5,7 +5,6 @@ import thunk from 'redux-thunk'
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
     type : DataReducer
   }
 }, 

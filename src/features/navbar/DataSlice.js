@@ -21,7 +21,7 @@ export const UserSlice = createSlice({
         case 'FETCH_SUCCESS':
           return{
             ...state,
-            loading : 'Loaded',
+            loading : undefined,
             data : action.payload,
           }
         case 'FETCH_ERROR':
@@ -71,15 +71,12 @@ const FETCH_FAIL = error =>{
 //------------------------------------------------//
 export const fetchCustomer = () =>{
   return (dispatch) =>{
- //   dispatch(FETCH_LOADING())
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/utenti/customer`)
     .then(response =>{
-  //    dispatch(FETCH_SUCCESS(response.data))
       dispatch(DataReducer(FETCH_SUCCESS(response.data)))
     })
     .catch( (error) =>{
-     // dispatch(FETCH_FAIL(error.message))
       dispatch(DataReducer(FETCH_FAIL(error.message)))
     })
   }
@@ -87,26 +84,26 @@ export const fetchCustomer = () =>{
 
 export const fetchMezzi = () =>{
   return (dispatch) =>{
-    dispatch(FETCH_LOADING())
+    dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/mezzi/catalogo`)
     .then(response =>{
-      dispatch(FETCH_SUCCESS(response.data))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
     })
     .catch( (error) =>{
-      dispatch(FETCH_FAIL(error.message))
+      dispatch(DataReducer(FETCH_FAIL(error.message)))
     })
   }
 }
 
 export const fetchPrenotazioni = () =>{
   return (dispatch) =>{
-    dispatch(FETCH_LOADING())
+    dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/prenotazioni`)
     .then(response =>{
-      dispatch(FETCH_SUCCESS(response.data))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
     })
     .catch( (error) =>{
-      dispatch(FETCH_FAIL(error.message))
+      dispatch(DataReducer(FETCH_FAIL(error.message)))
     })
   }
 }

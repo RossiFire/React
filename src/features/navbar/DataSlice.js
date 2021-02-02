@@ -4,7 +4,8 @@ import axios from 'axios'
 const initialState = {
   data : [],
   error : undefined,
-  loading : undefined
+  loading : undefined,
+  head : []
 }
 
 export const UserSlice = createSlice({
@@ -24,6 +25,7 @@ export const UserSlice = createSlice({
             ...state,
             loading : undefined,
             data : action.payload,
+            head : action.head
           }
         case 'FETCH_ERROR':
           return{
@@ -50,13 +52,15 @@ export const UserSlice = createSlice({
 const FETCH_LOADING = () =>{
   return{
     type : 'FETCH_LOADING',
-    payload : []
+    payload : [],
+    head : []
   }
 }
-const FETCH_SUCCESS = data =>{
+const FETCH_SUCCESS = (data, head) =>{
   return{
     type : 'FETCH_SUCCESS',
-    payload : data
+    payload : data,
+    head : head
   }
 }
 
@@ -76,7 +80,7 @@ export const fetchCustomer = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/utenti/customer`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','nome','cognome','nascita','password'])))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -89,7 +93,7 @@ export const fetchMezzi = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/mezzi/catalogo`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','casaCostr','tipomezzo','modello','targa'])))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -102,7 +106,7 @@ export const fetchPrenotazioni = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/prenotazioni`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data)))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato'])))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))

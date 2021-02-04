@@ -13,7 +13,7 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }
     return(
         <div>
             <Navbar expand="sm" className="navbar">
-                <Navbar.Brand href="#home">Home</Navbar.Brand>
+               {/*  <Navbar.Brand href="#home">Home</Navbar.Brand> */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

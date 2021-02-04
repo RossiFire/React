@@ -1,13 +1,42 @@
 import React, { Component, useEffect } from 'react'
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './table.css'
+import axios from 'axios'
+import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from '../features/navbar/DataSlice'
 
 function Table(props){
     let TB = ''
     let sliceData;
     let tbOperation = useSelector(state => state.type.data.typeData)
+    const dispatch = useDispatch();
+    
+    const DeleteById=(id)=>{
+        axios.get(`http://localhost:8050/${tbOperation}/elimina/${id}`)
+        .then(()=>{
+            switch(tbOperation){
+                case 'utenti':
+                    dispatch(()=>fetchCustomer())
+                    console.log("utenti")
+                    break;
+                case 'mezzi':
+                    dispatch(()=>fetchMezzi())
+                    console.log("mezzi")
+                    break;
+                case 'prenotazioni':
+                    dispatch(()=>fetchPrenotazioni())
+                    console.log("prenot")
+                    break;
+                default:
+                        console.log("def")
+                    alert("non dovrebbe andare così")
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
 
     const dt = useSelector(state => state.type)
     if(dt.data.head){
@@ -39,7 +68,7 @@ function Table(props){
                     if(col === 'azioni'){
                         return <td>
                         <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button>
-                        <Button variant="danger" onClick={()=>props.onClick('Elimina',dato['id'])}>Elimina</Button>
+                        <Button variant="danger" onClick={()=>DeleteById(dato['id'])}>Elimina</Button>
                         </td>
                     }
                     return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]}</td>

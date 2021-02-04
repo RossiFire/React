@@ -4,6 +4,7 @@ import AppTable from '../Table/Table'
 import AppForm from '../Form/Form'
 import './fullpage.css'
 import axios from 'axios'
+import {useDispatch, connect} from 'react-redux'
 
 class Fullpage extends React.Component{
     constructor(props){
@@ -14,20 +15,29 @@ class Fullpage extends React.Component{
             buttonOp : undefined
         }
     }
-
     SetFormOperation(url, id, op){
-        axios.get(`http://localhost:8050/${url}/singolo/${id}`)
-        .then(response=>{
-            this.setState({
-                ...this.state,
-                operation : url,
-                dataMod : response.data,
-                buttonOp : op
+        if(url === 'modifica'){
+            axios.get(`http://localhost:8050/${url}/singolo/${id}`)
+            .then(response=>{
+                this.setState({
+                    ...this.state,
+                    operation : url,
+                    dataMod : response.data,
+                    buttonOp : op
+                })
             })
-        })
-        .catch(error=>{
-            console.log(error)
-        })
+            .catch(error=>{
+                console.log(error)
+            })
+        }else{
+            axios.get(`http://localhost:8050/${url}/elimina/${id}`)
+            .then(response=>{
+                console.log(response)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        }
     }
 
     render(){
@@ -40,5 +50,6 @@ class Fullpage extends React.Component{
         )
     }
 }
+
 
 export default Fullpage

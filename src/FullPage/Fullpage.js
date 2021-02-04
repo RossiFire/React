@@ -10,16 +10,19 @@ class Fullpage extends React.Component{
         super(props);
         this.state ={
             operation : '',
-            userMod : undefined
+            userMod : undefined,
+            buttonOp : undefined
         }
     }
 
-    SetFormOperation(op, id){
-        axios.get(`http://localhost:8050/utenti/singolo/${id}`)
+    SetFormOperation(url, id, op){
+        axios.get(`http://localhost:8050/${url}/singolo/${id}`)
         .then(response=>{
             this.setState({
-                operation : op,
-                userMod : response
+                ...this.state,
+                operation : url,
+                dataMod : response.data,
+                buttonOp : op
             })
         })
         .catch(error=>{
@@ -32,7 +35,7 @@ class Fullpage extends React.Component{
             <div id="main-page">
                 <AppNavbar />
                 <AppTable onClick={(op, id)=>this.SetFormOperation(op, id)}/>
-                <AppForm operation={this.state.operationop} user={this.state.userMod}/>
+                <AppForm operation={this.state.operationop} dato={this.state.dataMod} button={this.state.buttonOp}/>
             </div>
         )
     }

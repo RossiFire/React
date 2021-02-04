@@ -1,17 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { useSelector} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './table.css'
-import AppForm from '../Form/Form'
 
 function Table(props){
     let TB = ''
     let sliceData;
-
-    function prova(id){
-        console.log(id);
-    }
+    let tbOperation = useSelector(state => state.type.data.typeData)
 
     const dt = useSelector(state => state.type)
     if(dt.data.head){
@@ -29,29 +25,33 @@ function Table(props){
             <tr>
                 {dt.data.head.map(col =>{
                     if(col === 'tipomezzo'){
-                        return <td key={dato[col]}>{dato[col]['tipo']}</td>
+                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
-                        return <td key={dato[col]}>{dato[col]['nome']}</td>
+                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['nome']}</td>
                     }
                     if(col === 'mezzoPrenotato'){
-                        return <td key={dato[col]}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                     }if(col === 'approvata'){
                         if(dato[col])
-                            return <td key={dato[col]}>Si</td>
-                        return <td key={dato[col]}>No</td>
+                            return <td key={Math.random() *(200 - 1)+ 1}>Si</td>
+                        return <td key={Math.random() *(200 - 1)+ 1}>No</td>
                     }
                     if(col === 'azioni'){
-                        return <td>{/* <Button variant="warning" onClick={()=>prova(dato['id'])}>Modifica</Button> */}
-                        <Button variant="warning" onClick={()=>props.onClick('Modifica',dato['id'])}>Modifica</Button>
-                         <Button variant="danger" onClick={()=>props.onClick('Elimina',dato['id'])}>Elimina</Button></td>
+                        return <td>
+                        <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button>
+                        <Button variant="danger" onClick={()=>props.onClick('Elimina',dato['id'])}>Elimina</Button>
+                        </td>
                     }
-                    return <td key={dato[col]}>{dato[col]}</td>
+                    return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]}</td>
                 }
                 )}
             </tr>
             )}
         </tbody>
     </table>
+
+
+
     </div>
     
     }

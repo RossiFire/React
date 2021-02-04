@@ -83,7 +83,7 @@ export const fetchCustomer = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/utenti/customer`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','nome','cognome','nascita','password','azioni'], 'CUSTOMER')))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','nome','cognome','nascita','password','azioni'], 'utenti')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -96,7 +96,7 @@ export const fetchMezzi = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/mezzi/catalogo`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','casaCostr','tipomezzo','modello','targa','azioni'], 'MEZZI')))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','casaCostr','tipomezzo','modello','targa','azioni'], 'mezzi')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
@@ -109,7 +109,7 @@ export const fetchPrenotazioni = () =>{
     dispatch(DataReducer(FETCH_LOADING()))
     axios.get(`http://localhost:8050/prenotazioni`)
     .then(response =>{
-      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato','azioni'], 'PRENOTAZIONI')))
+      dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato','azioni'], 'prenotazioni')))
     })
     .catch( (error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))

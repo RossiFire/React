@@ -12,6 +12,7 @@ function Table(props){
     let tbOperation = useSelector(state => state.type.data.typeData)
     const dispatch = useDispatch();
     
+    //eliminazione di un dato in base all'id
     const DeleteById=(id)=>{
         axios.get(`http://localhost:8050/${tbOperation}/elimina/${id}`)
         .then(()=>{
@@ -38,6 +39,7 @@ function Table(props){
         })
     }
 
+    // dt : array di oggetti
     const dt = useSelector(state => state.type)
     if(dt.data.head){
     sliceData = dt.data.payload.slice(0,6)
@@ -54,16 +56,16 @@ function Table(props){
             <tr>
                 {dt.data.head.map(col =>{
                     if(col === 'tipomezzo'){
-                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['tipo']}</td>
+                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
-                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['nome']}</td>
+                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['nome']}</td>
                     }
                     if(col === 'mezzoPrenotato'){
-                        return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                     }if(col === 'approvata'){
                         if(dato[col])
-                            return <td key={Math.random() *(200 - 1)+ 1}>Si</td>
-                        return <td key={Math.random() *(200 - 1)+ 1}>No</td>
+                            return <td key={Math.random() *(400 - 1)+ 1}>Si</td>
+                        return <td key={Math.random() *(400 - 1)+ 1}>No</td>
                     }
                     if(col === 'azioni'){
                         return <td>
@@ -71,7 +73,7 @@ function Table(props){
                         <Button variant="danger" onClick={()=>DeleteById(dato['id'])}>Elimina</Button>
                         </td>
                     }
-                    return <td key={Math.random() *(200 - 1)+ 1}>{dato[col]}</td>
+                    return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]}</td>
                 }
                 )}
             </tr>

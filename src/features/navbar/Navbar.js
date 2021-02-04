@@ -8,12 +8,11 @@ import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni, data }){
+export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
     const dispatch = useDispatch()
     return(
         <div>
             <Navbar expand="sm" className="navbar">
-               {/*  <Navbar.Brand href="#home">Home</Navbar.Brand> */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

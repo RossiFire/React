@@ -15,8 +15,7 @@ class Fullpage extends React.Component{
             buttonOp : undefined
         }
     }
-    SetFormOperation(url, id, op){
-        if(url === 'modifica'){
+/*     SetFormOperation(url, id, op){
             axios.get(`http://localhost:8050/${url}/singolo/${id}`)
             .then(response=>{
                 this.setState({
@@ -29,22 +28,13 @@ class Fullpage extends React.Component{
             .catch(error=>{
                 console.log(error)
             })
-        }else{
-            axios.get(`http://localhost:8050/${url}/elimina/${id}`)
-            .then(response=>{
-                console.log(response)
-            })
-            .catch(error=>{
-                console.log(error)
-            })
-        }
-    }
+    } */
 
     render(){
         return(
             <div id="main-page">
                 <AppNavbar />
-                <AppTable onClick={(op, id)=>this.SetFormOperation(op, id)}/>
+                <AppTable /* onClick={(op, id)=>this.SetFormOperation(op, id)} *//>
                 <AppForm operation={this.state.operationop} dato={this.state.dataMod} button={this.state.buttonOp}/>
             </div>
         )

@@ -35,8 +35,7 @@ function AppForm(props){
                     }
                 }
             })
-        }  
-        
+        }    
         {
             props.button ?(
                 <div>
@@ -48,8 +47,7 @@ function AppForm(props){
                     <Button variant="dark">Aggiungi</Button>
                     <h2>{props.button}</h2>
                 </div>
-            )   
-            
+            )    
         }
         </div>
     }else{

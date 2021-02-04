@@ -29,8 +29,8 @@ function Table(props){
                     console.log("prenot")
                     break;
                 default:
-                        console.log("def")
-                    alert("non dovrebbe andare così")
+                    console.log("def")
+                    alert("Errore")
             }
         })
         .catch(error=>{

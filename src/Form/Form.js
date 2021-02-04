@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function AppForm(){
+function AppForm(props){
     let tipo = useSelector(state => state.type)
     let form = undefined   
 
@@ -13,14 +13,20 @@ function AppForm(){
         {
             tipo.data.head.map(col=>{
                 if(col !== 'azioni'){
-                    return <input type="text" placeholder={col}></input>
+                    if(props.user){
+                        return <div>
+                                <input type="text" placeholder={col} value={props.user[col]}></input>
+                                </div>
+                    }else{
+                        return <input type="text" placeholder={col}></input>
+                    }
                 }
             })
         }  
            <br/> <Button variant="warning">Modifica</Button>
         </div>
     }else{
-        form = undefined
+        form = null
     }
     
     return(

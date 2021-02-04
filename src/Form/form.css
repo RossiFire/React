@@ -1,7 +1,10 @@
 .form{
-    position: relative;
+    position: absolute;
     border: 1px solid blueviolet;
-    width: 100%;
+    bottom: 10px;
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;

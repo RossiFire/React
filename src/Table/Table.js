@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './table.css'
 import AppForm from '../Form/Form'
 
-function Table(){
+function Table(props){
     let TB = ''
     let sliceData;
 
@@ -41,7 +41,9 @@ function Table(){
                         return <td key={dato[col]}>No</td>
                     }
                     if(col === 'azioni'){
-                        return <td><Button variant="warning" onClick={()=>prova(dato['id'])}>Modifica</Button> <Button variant="danger" onClick={()=>prova(dato['id'])}>Elimina</Button></td>
+                        return <td>{/* <Button variant="warning" onClick={()=>prova(dato['id'])}>Modifica</Button> */}
+                        <Button variant="warning" onClick={()=>props.onClick('Modifica',dato['id'])}>Modifica</Button>
+                         <Button variant="danger" onClick={()=>props.onClick('Elimina',dato['id'])}>Elimina</Button></td>
                     }
                     return <td key={dato[col]}>{dato[col]}</td>
                 }
@@ -50,7 +52,6 @@ function Table(){
             )}
         </tbody>
     </table>
-    <AppForm />
     </div>
     
     }

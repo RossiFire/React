@@ -4,7 +4,7 @@ import Table from '../../Table/Table'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from './DataSlice'
-import { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer, ProvaSlice, ThunkListaCustomer } from '../../Table/ProvaSlice'
+import { CustomerReducer, MezziReducer, PrenotazioniReducer,} from '../../Table/ProvaSlice'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -20,7 +20,7 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
                    {/*  <Nav.Link><button onClick={() => dispatch(()=>fetchCustomer())}>Customer</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link> */}
-                     <Nav.Link><button onClick={() =>dispatch(()=>ThunkListaCustomer())}>Customer</button></Nav.Link>
+                     <Nav.Link><button onClick={() =>dispatch(()=>console.log('ok'))}>Customer</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link>
                 </Nav>

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import * as _ from 'lodash'
 
 const initialState ={
     Dati : [],
@@ -11,12 +12,6 @@ export const ProvaSlice = createSlice({
     name : 'prova',
     initialState,
     reducers:{
-        CategoriaReducer(state,action){
-            return{
-                ...state,
-                categoria : action.payload 
-            }
-        },
         ListaDatiReducer(state,action){
             return{
                 ...state,
@@ -24,110 +19,96 @@ export const ProvaSlice = createSlice({
                 categoria : action.categoria
             }
         },
-            CustomerAggiornato(state, action){
-              const {id, nome,cognome,password} = action.payload
-              const customerEsistente = state.DataReducer.Dati.find(dato => dato.id === id)
-              if(customerEsistente){
-                customerEsistente['nome'] = nome
-                customerEsistente['cognome'] = cognome
-                customerEsistente['password'] = password
-              }
-            },
-            CustomerAggiunto(state,action){
-              state.Dati.push(action.payload)
-            },
-            MezzoAggiornato(state,action){
-                const {id, casaCostr, modello, targa, tipomezzo} = action.payload
-                const mezzoEsistente = state.DataReducer.Dati.find(dato => dato.id === id)
-                if(mezzoEsistente){
-                    mezzoEsistente['casaCostr'] = casaCostr
-                    mezzoEsistente['modello'] = modello
-                    mezzoEsistente['targa'] = targa
-                    mezzoEsistente['tipomezzo']['id'] = tipomezzo
-                }
-            },
-            MezzoAggiunto(state,action){
-                state.Dati.push(action.payload)
+        CustomerReducer(state,action){
+            switch(action.TipoOperazione){
+                case 'MODIFICA':
+                    const customerEsistente = state.DataReducer.Dati.find(dato => dato.id === id)
+                    const {id, nome,cognome,password} = action.payload
+                    if(customerEsistente){
+                        customerEsistente['nome'] = nome
+                        customerEsistente['cognome'] = cognome
+                        customerEsistente['password'] = password
+                    } 
+                case 'AGGIUNGI':
+                    state.Dati.push(action.payload)
+                case 'ELIMINA':
+                    state.Dati = _.reject(state.Dati, { 'id': action.payload['id']});
             }
+        },
+        MezziReducer(state,action){
+            switch(action.TipoOperazione){
+                case 'MODIFICA':
+                    const {id, casaCostr, modello, targa, tipomezzo} = action.payload
+                    const mezzoEsistente = state.DataReducer.Dati.find(dato => dato.id === id)
+                    if(mezzoEsistente){
+                        mezzoEsistente['casaCostr'] = casaCostr
+                        mezzoEsistente['modello'] = modello
+                        mezzoEsistente['targa'] = targa
+                        mezzoEsistente['tipomezzo']['id'] = tipomezzo
+                    }
+                case 'AGGIUNGI':
+                    state.Dati.push(action.payload)
+                case 'ELIMINA':
+                    state.Dati = _.reject(state.Dati, { 'id': action.payload['id']});
+            }
+        },
+        PrenotazioniReducer(state,action){
+            switch(action.TipoOperazione){
+                case 'MODIFICA':
+                    const {id, casaCostr, modello, targa, tipomezzo} = action.payload
+                    const mezzoEsistente = state.DataReducer.Dati.find(dato => dato.id === id)
+                    if(mezzoEsistente){
+                        mezzoEsistente['casaCostr'] = casaCostr
+                        mezzoEsistente['modello'] = modello
+                        mezzoEsistente['targa'] = targa
+                        mezzoEsistente['tipomezzo']['id'] = tipomezzo
+                    }
+                case 'AGGIUNGI':
+                    state.Dati.push(action.payload)
+                case 'ELIMINA':
+                    state.Dati = _.reject(state.Dati, { 'id': action.payload['id']});
+            }
+        }
     }
 })
 
 
 
 
-//------------------------- CONNETTORI PER OPERAZIONI
-export const AggiungiDato = (state,data) => {
-    switch(state.categoria){
-      case 'utenti':
-        ThunkAggiungiCustomer(data)
-        break
-      case 'mezzi':
-        ThunkAggiungiMezzo(data)
-      case 'prenotazioni':
-        ThunkAggiungiPrenotazioni(data);
-      default:
-        console.log('errore')
-    }
-  }
-
-
 // ---------------------------------------------- THUNK
-export const ThunkListaCustomer =()=>{
+export const ThunkAggiungiCustomer = (data) =>{
     return(dispatch)=>{
-        axios.get('http://localhost:8050/utenti/customer')
-        .then(response=>{
-            dispatch(ListaDatiReducer(AggiungiCustomerData(response)))
-        })
-        .catch(error=>{
-            console.log(error)
-        })
+        axios.post("http://localhost:8050/utenti/aggiungi", data)
+        dispatch(CustomerReducer(OperazioniAction(data, 'AGGIUNGI')))
+    }
+}
+export const ThunkModificaCustomer = (data,operazione) =>{
+    return(dispatch)=>{
+        axios.post("http://localhost:8050/utenti/modifica", data)
+        dispatch(CustomerReducer(OperazioniAction(data, 'MODIFICA')))
+    }
+}
+export const ThunkEliminaCustomer = (data,operazione) =>{
+    return(dispatch)=>{
+        axios.post("http://localhost:8050/utenti/elimina", data)
+        dispatch(CustomerReducer(OperazioniAction(data, 'ELIMINA')))
     }
 }
 
-  export const ThunkAggiungiCustomer = data =>{
-    return (dispatch)=>{
-      axios.post(`http://localhost:8050/utenti/aggiungi`, data)
-      .then(response=>{
-        dispatch(CustomerAggiunto(data))
-        console.log(response)
-      })
-      .catch(error=>{
-        console.log(error)
-      })
-    }
-  } 
 
-  export const ThunkAggiungiMezzo = data =>{
-    return (dispatch)=>{
-      axios.post(`http://localhost:8050/mezzi/aggiungi`, data)
-      .then(response=>{
-        dispatch(CustomerAggiunto(data))
-        console.log(response)
-      })
-      .catch(error=>{
-        console.log(error)
-      })
-    }
-  }
-  
-  export const ThunkAggiungiPrenotazioni = data =>{
-    return (dispatch)=>{
-      axios.post(`http://localhost:8050/prenotazioni/aggiungi`, data)
-      .then(response=>{
-        dispatch(CustomerAggiunto(data))
-        console.log(response)
-      })
-      .catch(error=>{
-        console.log(error)
-      })
-    }
-  }
 
 // ACTIONS
-  const AggiungiCustomerData = data =>{
+  const FetchLista = data =>{
       return{
           payload : data,
           categoria : 'customer'
+      }
+  }
+
+  const OperazioniAction = (data, operazione)=>{
+      return{
+          payload : data,
+          TipoOperazione : operazione
       }
   }
 
@@ -136,6 +117,6 @@ export const SelectAll = state => state.ProvaSlice.Dati
 
 
 
-export const { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer,ListaDatiReducer} = ProvaSlice.actions
+export const {CustomerReducer, MezziReducer, PrenotazioniReducer} = ProvaSlice.actions
 export default ProvaSlice;
 

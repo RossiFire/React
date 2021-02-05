@@ -5,7 +5,7 @@ import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function AppForm(props){
-    let tipo = useSelector(state => state.type)
+    let tipo = useSelector(state => state.DataSlice)
     let form = ""   
 
     if(tipo.data.head){

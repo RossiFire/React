@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios'
 
 const initialState = {
@@ -9,8 +9,8 @@ const initialState = {
   typeData : undefined
 }
 
-export const UserSlice = createSlice({
-  name: 'dataType',
+export const DataSlice = createSlice({
+  name: 'DataSlice',
   initialState,
   reducers: {
     DataReducer : (state = initialState, action) =>{
@@ -43,7 +43,7 @@ export const UserSlice = createSlice({
           }
       }
     }
-  },
+  }
 });
 
 
@@ -74,6 +74,7 @@ const FETCH_FAIL = error =>{
   }
 }
 
+// FINE ACTION //
 
 
 // -------------------- THUNK --------------------//
@@ -111,11 +112,17 @@ export const fetchPrenotazioni = () =>{
     .then(response =>{
       dispatch(DataReducer(FETCH_SUCCESS(response.data, ['id','approvata','dataInizio','dataFine','utentePrenotato', 'mezzoPrenotato','azioni'], 'prenotazioni')))
     })
-    .catch( (error) =>{
+    .catch((error) =>{
       dispatch(DataReducer(FETCH_FAIL(error.message)))
     })
   }
 }
 
-export const { DataReducer } = UserSlice.actions
-export default UserSlice.reducer;
+
+export const SelById = (state, datoId) =>{ state.DataReducer.data.find(dato => dato['id'] === datoId)}
+export const SelectAll = state => state.DataReducer.data
+
+
+export const { CustomerReducer, CustomerAdded, CustomerUpdated } = DataSlice.actions
+export const { DataReducer } = DataSlice.actions
+export default DataSlice.reducer;

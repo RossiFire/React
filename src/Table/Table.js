@@ -9,7 +9,7 @@ import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from '../features/navbar/D
 function Table(props){
     let TB = ''
     let sliceData;
-    let tbOperation = useSelector(state => state.type.data.typeData)
+    let tbOperation = useSelector(state => state.DataSlice.data.typeData)
     const dispatch = useDispatch();
     
     //eliminazione di un dato in base all'id
@@ -18,15 +18,15 @@ function Table(props){
         .then(()=>{
             switch(tbOperation){
                 case 'utenti':
-                    dispatch(()=>fetchCustomer())
+                    dispatch(fetchCustomer())
                     console.log("utenti")
                     break;
                 case 'mezzi':
-                    dispatch(()=>fetchMezzi())
+                    dispatch(fetchMezzi())
                     console.log("mezzi")
                     break;
                 case 'prenotazioni':
-                    dispatch(()=>fetchPrenotazioni())
+                    dispatch(fetchPrenotazioni())
                     console.log("prenot")
                     break;
                 default:
@@ -40,7 +40,7 @@ function Table(props){
     }
 
     // dt : array di oggetti
-    const dt = useSelector(state => state.type)
+    const dt = useSelector(state => state.DataSlice)
     if(dt.data.head){
     sliceData = dt.data.payload.slice(0,6)
     TB =
@@ -56,16 +56,16 @@ function Table(props){
             <tr>
                 {dt.data.head.map(col =>{
                     if(col === 'tipomezzo'){
-                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['tipo']}</td>
+                        return <td key={dato['id']+dato[col]}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
-                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['nome']}</td>
+                        return <td key={dato['id']+dato[col]}>{dato[col]['nome']}</td>
                     }
                     if(col === 'mezzoPrenotato'){
-                        return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                        return <td key={dato['id']+dato[col]}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                     }if(col === 'approvata'){
                         if(dato[col])
-                            return <td key={Math.random() *(400 - 1)+ 1}>Si</td>
-                        return <td key={Math.random() *(400 - 1)+ 1}>No</td>
+                            return <td key={dato['id']+dato[col]}>Si</td>
+                        return <td key={dato['id']+dato[col]}>No</td>
                     }
                     if(col === 'azioni'){
                         return <td>
@@ -73,7 +73,7 @@ function Table(props){
                         <Button variant="danger" onClick={()=>DeleteById(dato['id'])}>Elimina</Button>
                         </td>
                     }
-                    return <td key={Math.random() *(400 - 1)+ 1}>{dato[col]}</td>
+                    return <td key={dato['id']+dato[col]}>{dato[col]}</td>
                 }
                 )}
             </tr>

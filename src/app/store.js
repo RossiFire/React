@@ -1,10 +1,12 @@
 import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
-import DataReducer from '../features/navbar/DataSlice'
+import DataSlice from '../features/navbar/DataSlice'
 import thunk from 'redux-thunk'
+import ProvaSlice from '../Table/ProvaSlice'
 
 export default configureStore({
   reducer: {
-    type : DataReducer
+    DataSlice : DataSlice,
+    ProvaSlice :ProvaSlice
   }
 }, 
 applyMiddleware(thunk)

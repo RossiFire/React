@@ -4,7 +4,7 @@ import Table from '../../Table/Table'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from './DataSlice'
-import { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer,ListaCustomerReducer, ProvaSlice, ThunkListaCustomer } from '../../Table/ProvaSlice'
+import { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer, ProvaSlice, ThunkListaCustomer } from '../../Table/ProvaSlice'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 

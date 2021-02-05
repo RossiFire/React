@@ -17,7 +17,7 @@ export const ProvaSlice = createSlice({
                 categoria : action.payload 
             }
         },
-        ListaCustomerReducer(state,action){
+        ListaDatiReducer(state,action){
             return{
                 ...state,
                 Dati: action.payload,
@@ -76,7 +76,7 @@ export const ThunkListaCustomer =()=>{
     return(dispatch)=>{
         axios.get('http://localhost:8050/utenti/customer')
         .then(response=>{
-            dispatch(ListaCustomerReducer(AggiungiCustomerData(response)))
+            dispatch(ListaDatiReducer(AggiungiCustomerData(response)))
         })
         .catch(error=>{
             console.log(error)
@@ -136,6 +136,6 @@ export const SelectAll = state => state.ProvaSlice.Dati
 
 
 
-export const { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer,ListaCustomerReducer} = ProvaSlice.actions
+export const { CustomerReducer, CustomerAggiunto, CustomerAggiornato, CategoriaReducer,ListaDatiReducer} = ProvaSlice.actions
 export default ProvaSlice;
 

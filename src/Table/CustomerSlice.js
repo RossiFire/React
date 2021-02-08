@@ -8,20 +8,34 @@ const initialState ={
 }
 
 
+// ASYNC THUNK
 export const fetchCustomerData = createAsyncThunk('customer/fetchCustomer', async () => {
     const response = await axios.get('http://localhost:8050/utenti/customer')
     return response.data
   })
 
-export const AddCustomer = createAsyncThunk('customer/addCustomer', async (dati) => {
-    const response = await axios.post('http://localhost:8050/utenti/aggiungi', dati)
-    return response.data
-})
 
 export const CustomerSlice = createSlice({
     name : 'customer',
     initialState,
-    reducers:{},
+    reducers:{
+        CustomerReducer(state,action){
+            switch(action.TipoOperazione){
+                case 'MODIFICA':
+                    const customerEsistente = state.CustomerReducer.Dati.find(dato => dato.id === id)
+                    const {id, nome,cognome,password} = action.payload
+                    if(customerEsistente){
+                        customerEsistente['nome'] = nome
+                        customerEsistente['cognome'] = cognome
+                        customerEsistente['password'] = password
+                    } 
+                case 'AGGIUNGI':
+                    state.Dati.push(action.payload)
+                case 'ELIMINA':
+                    state.Dati = _.reject(state.Dati, { 'id': action.payload['id']});
+            }
+        }
+    },
     extraReducers:{
         [fetchCustomerData.pending]: (state,action)=> {
             state.stato = 'loading'
@@ -30,7 +44,7 @@ export const CustomerSlice = createSlice({
             state.stato = 'success'
             state.Dati = state.Dati.concat(action.payload);
         },
-        [fetchCustomerData.rejected] : (state, action)=>{
+        [fetchCustomerData.rejected] : (state)=>{
             state.stato = 'failed'
         }
     }
@@ -38,7 +52,37 @@ export const CustomerSlice = createSlice({
 
 
 
+//THUNK
+export const ThunkAggiungiCustomer =(state,utente) =>{
+    return(dispatch)=>{
+        axios.post("http://localhost:8050/utenti/aggiungi", utente)
+        dispatch(CustomerReducer(OperazioniAction(utente, 'AGGIUNGI')))
+    }
+}
+
+export const ThunkModificaCustomer = (state,utente) =>{
+    axios.get(`http://localhost:8050/utenti/modifica/${utente.id}`)
+    .then(()=>{
+        return(dispatch)=>{
+            axios.post("http://localhost:8050/utenti/modifica", utente)
+            dispatch(CustomerReducer(OperazioniAction(utente, 'AGGIUNGI')))
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+}
+
+// ACTIONS
+const OperazioniAction = (data, operazione)=>{
+    return{
+        payload : data,
+        TipoOperazione : operazione
+    }
+}
+
 export const SelById = (state, datoId) =>{ state.ProvaSlice.Dati.find(dato => dato['id'] === datoId)}
 export const SelectAll = state => state.ProvaSlice.Dati
 
+export const {CustomerReducer} = CustomerSlice.actions
 export default CustomerSlice

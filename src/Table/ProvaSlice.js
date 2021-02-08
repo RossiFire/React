@@ -76,34 +76,66 @@ export const ProvaSlice = createSlice({
 
 
 // ---------------------------------------------- THUNK
-export const ThunkAggiungiCustomer = (data) =>{
-    return(dispatch)=>{
-        axios.post("http://localhost:8050/utenti/aggiungi", data)
-        dispatch(CustomerReducer(OperazioniAction(data, 'AGGIUNGI')))
-    }
-}
-export const ThunkModificaCustomer = (data,operazione) =>{
-    return(dispatch)=>{
-        axios.post("http://localhost:8050/utenti/modifica", data)
-        dispatch(CustomerReducer(OperazioniAction(data, 'MODIFICA')))
-    }
-}
-export const ThunkEliminaCustomer = (data,operazione) =>{
-    return(dispatch)=>{
-        axios.post("http://localhost:8050/utenti/elimina", data)
-        dispatch(CustomerReducer(OperazioniAction(data, 'ELIMINA')))
+export const ThunkListaDati = (categoria)=>{
+    switch(categoria){
+        case 'CUSTOMER':
+            return(dispatch)=>{
+                axios.get("http://localhost:8050/utenti/customer")
+                .then(response=>{
+                    dispatch(ListaDatiReducer(ActionListaDati(response, categoria)))
+                })
+            }
+        case 'MEZZI':
+            return(dispatch)=>{
+                axios.get("http://localhost:8050/mezzi/catalogo")
+                .then(response=>{
+                    dispatch(ListaDatiReducer(ActionListaDati(response, categoria)))
+                })
+            }
+        case 'PRENOTAZIONI':
+            return(dispatch)=>{
+                axios.get("http://localhost:8050/prenotazioni")
+                .then(response=>{
+                    dispatch(ListaDatiReducer(ActionListaDati(response, categoria)))
+                })
+            }
+        default :
+            alert('errore')
     }
 }
 
+
+
+export const ThunkAggiungiDato = (data,state) =>{
+    switch(state.categoria){
+        case 'CUSTOMER':
+            return(dispatch)=>{
+                axios.post("http://localhost:8050/utenti/aggiungi", data)
+                dispatch(CustomerReducer(OperazioniAction(data, 'AGGIUNGI')))
+            }
+        case 'MEZZI':
+            return(dispatch)=>{
+                axios.post("http://localhost:8050/mezzi/aggiungi", data)
+                dispatch(MezziReducer(OperazioniAction(data, 'AGGIUNGI')))
+            }
+        case 'PRENOTAZIONI':
+            return(dispatch)=>{
+                axios.post("http://localhost:8050/prenotazioni/aggiungi", data)
+                dispatch(PrenotazioniReducer(OperazioniAction(data, 'AGGIUNGI')))
+            }
+        default :
+            alert('errore')
+    }   
+}
 
 
 // ACTIONS
-  const FetchLista = data =>{
+  const ActionListaDati = (data, categoria) =>{
       return{
           payload : data,
-          categoria : 'customer'
+          categoria : categoria
       }
-  }
+  } 
 
   const OperazioniAction = (data, operazione)=>{
       return{
@@ -117,6 +149,6 @@ export const SelectAll = state => state.ProvaSlice.Dati
 
 
 
-export const {CustomerReducer, MezziReducer, PrenotazioniReducer} = ProvaSlice.actions
+export const {CustomerReducer, MezziReducer, PrenotazioniReducer, ListaDatiReducer} = ProvaSlice.actions
 export default ProvaSlice;
 

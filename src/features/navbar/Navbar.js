@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './navbar.css'
 import Table from '../../Table/Table'
 import { connect } from 'react-redux'
@@ -7,10 +7,13 @@ import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from './DataSlice'
 import { CustomerReducer, MezziReducer, PrenotazioniReducer,} from '../../Table/ProvaSlice'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import {fetchCustomerData} from '../../Table/CustomerSlice'
 
 export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
     const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(fetchCustomerData())
+    })
     return(
         <div>
             <Navbar expand="sm" className="navbar">

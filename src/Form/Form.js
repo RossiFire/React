@@ -3,15 +3,28 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {addCustomer, modCustomer} from '../Table/CustomerSlice'
 
 function AppForm(props){
+    const dispatch = useDispatch()
     let misc = useSelector(state => state.customer)
     let form = ""   
 
     let tempUtente = { id: '', nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
 
     const handleInput =(col, event)=>{
-        tempUtente[col] = event.target.value 
+        switch(col){
+            case 'tipoutente':
+                tempUtente[col]['id'] = event.target.value
+                break
+            default :
+                tempUtente[col] = event.target.value 
+                break
+        }
+    }
+    const handleClick =()=>{
+        console.log(tempUtente)
+        dispatch(addCustomer(tempUtente));
     }
     if(misc.head){
       form= <div className="form-body">
@@ -28,9 +41,9 @@ function AppForm(props){
                         <input type="radio" name="tipomezzo" value="4" />
                         <label for="other">SUV</label></div>
                     }if(col === 'tipoutente'){
-                        return  <div><input type="radio" name="tipoutente" value="1" />
+                        return  <div><input type="radio" name="tipoutente" value="1"  onClick={(event)=>handleInput(col,event)} />
                         <label for="admin">Admin</label><br/>
-                        <input type="radio" name="tipoutente" value="2" />
+                        <input type="radio" name="tipoutente" value="2" onClick={(event)=>handleInput(col,event)}/>
                         <label for="customer">Customer</label><br/></div>
                     }
                     if(props.dato){
@@ -49,11 +62,11 @@ function AppForm(props){
         {
             props.button ?(
                 <div>
-                    <Button variant="warning">Modifica</Button>
+                    <Button variant="warning" onClick={()=>handleClick()}>Modifica</Button>
                 </div>
             ) :(
                 <div>
-                    <Button variant="dark">Aggiungi</Button>
+                    <Button variant="dark" onClick={()=>handleClick()}>Aggiungi</Button>
                 </div>
             )    
         }

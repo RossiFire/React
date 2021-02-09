@@ -33,18 +33,18 @@ function Table(props){
             <tr>
                 {dt.head.map(col =>{
                     if(col === 'tipomezzo'){
-                        return <td key={dato['id']+dato[col]}>{dato[col]['tipo']}</td>
+                        return <td key={Math.random() *100}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
-                        return <td key={dato['id']+dato[col]}>{dato[col]['nome']}</td>
+                        return <td key={Math.random() *100}>{dato[col]['nome']}</td>
                     }
                     if(col === 'mezzoPrenotato'){
-                        return <td key={dato['id']+dato[col]}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                        return <td key={Math.random() *100}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                     }if(col === 'approvata'){
                         if(dato[col])
-                            return <td key={dato['id']+dato[col]}>Si</td>
-                        return <td key={dato['id']+dato[col]}>No</td>
+                            return <td key={Math.random() *100}>Si</td>
+                        return <td key={Math.random() *100}>No</td>
                     }if(col === 'tipoutente'){
-                        return <td key={dato['id']+dato[col] + Math.random() *100}>{dato[col]['tipo']}</td>
+                        return <td key={Math.random() *100}>{dato[col]['tipo']}</td>
                     }
                     if(col === 'azioni'){
                         return <td>
@@ -52,7 +52,7 @@ function Table(props){
                         <Button variant="danger" onClick={()=>console.log('a')}>Elimina</Button>
                         </td>
                     }
-                    return <td key={dato['id']+dato[col]}>{dato[col]}</td>
+                    return <td key={Math.random() *100}>{dato[col]}</td>
                 }
                 )}
             </tr>

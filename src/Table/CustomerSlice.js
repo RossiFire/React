@@ -26,6 +26,10 @@ export const modCustomer = createAsyncThunk('customer/mod', async utente =>{
     return response.data
 })
 
+export const delCustomer = createAsyncThunk('customer/del', async id =>{
+    await axios.get(`http://localhost:8050/utenti/elimina/${id}`)
+})
+
 
 export const CustomerSlice = createSlice({
     name : 'customer',
@@ -48,6 +52,13 @@ export const CustomerSlice = createSlice({
         [modCustomer.fulfilled] : (state,action)=>{
 /*             state.Dati = _.reduce(state.Dati, {'id' : action.payload.id}), */
             state.Dati.push(action.payload)
+        },
+        [delCustomer.fulfilled] : (state,action)=>{
+/*             state.Dati = _.remove(state.Dati, (dato)=>{
+                return dato.id !== action.payload.id
+            }) */
+            console.log(action.payload)
+            console.log(state.Dati)
         }
     }
 })

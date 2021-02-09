@@ -2,6 +2,7 @@ import React, { Component, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {delCustomer} from '../Table/CustomerSlice'
 import './table.css'
 import axios from 'axios'
 
@@ -48,8 +49,8 @@ function Table(props){
                     }
                     if(col === 'azioni'){
                         return <td>
-                        <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button>
-                        <Button variant="danger" onClick={()=>console.log('a')}>Elimina</Button>
+                        {/* <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button> */}
+                        <Button variant="danger" onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
                         </td>
                     }
                     return <td key={Math.random() *100}>{dato[col]}</td>

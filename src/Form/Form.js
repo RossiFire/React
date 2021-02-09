@@ -10,13 +10,22 @@ function AppForm(props){
     let misc = useSelector(state => state.customer)
     let form = ""   
 
-    let tempUtente = { id: '', nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
+    let tempUtente = { id: undefined, nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
 
     const handleInput =(col, event)=>{
         switch(col){
             case 'tipoutente':
-                tempUtente[col]['id'] = event.target.value
-                break
+                if(parseInt(event.target.value) === 1){
+                    tempUtente[col]['id'] = parseInt(event.target.value)
+                    tempUtente[col]['tipo'] = "ADMIN"
+                }else{
+                    tempUtente[col]['id'] = parseInt(event.target.value)
+                    tempUtente[col]['tipo'] = "CUSTOMER"
+                }
+                break;
+            case 'id':
+                tempUtente[col] = parseInt(event.target.value)
+                break;
             default :
                 tempUtente[col] = event.target.value 
                 break

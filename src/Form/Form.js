@@ -32,7 +32,6 @@ function AppForm(props){
         }
     }
     const handleClick =()=>{
-        console.log(tempUtente)
         dispatch(addCustomer(tempUtente));
     }
     if(misc.head){

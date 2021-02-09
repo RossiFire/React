@@ -47,24 +47,21 @@ export const CustomerSlice = createSlice({
             state.stato = 'failed'
         },
         [addCustomer.fulfilled] : (state,action)=>{
-            state.Dati.push(action.payload)
+            state.Dati.push(action.meta.arg)
         },
         [modCustomer.fulfilled] : (state,action)=>{
-/*             state.Dati = _.reduce(state.Dati, {'id' : action.payload.id}), */
             state.Dati.push(action.payload)
         },
         [delCustomer.fulfilled] : (state,action)=>{
-/*             state.Dati = _.remove(state.Dati, (dato)=>{
-                return dato.id !== action.payload.id
-            }) */
-            console.log(action.payload)
-            console.log(state.Dati)
+            state.Dati = _.reject(state.Dati, {'id' : action.meta.arg})
         }
     }
 })
 
-export const SelCustomerById = (state, datoId) =>{ state.ProvaSlice.Dati.find(dato => dato['id'] === datoId)}
-export const SelectAllCustomer = state => state.CustomerSlice.Dati
+export const OrderById = (state) => _.orderBy(state.Dati, ['id'], ['asc']);
+
+export const SelCustomerById = (state, datoId) =>{ state.Dati.find(dato => dato['id'] === datoId)}
+export const SelectAllCustomer = state => state.CustomerReducer.Dati
 export const SelectHeader = (state) => state.head
 
 export const {CustomerReducer} = CustomerSlice.actions

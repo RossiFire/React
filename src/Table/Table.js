@@ -2,7 +2,7 @@ import React, { Component, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {delCustomer} from '../Table/CustomerSlice'
+import {delCustomer, OrderById} from '../Table/CustomerSlice'
 import './table.css'
 import axios from 'axios'
 
@@ -23,6 +23,7 @@ function Table(props){
         }
     TB =
     <div>
+        <Button onClick={()=>OrderById()}>Ordina</Button>
     <table>
         <thead>
         <tr>

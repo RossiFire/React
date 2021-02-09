@@ -15,15 +15,18 @@ function Table(props){
 
     // dt : array di oggetti
     const dt = useSelector(state => state.customer)
+    let custoData = useSelector(state => state.customer.Dati)
     if(dt.head){
         if(dt.Dati.length > 6){
             sliceData = dt.Dati.slice(0,6)
         }else{
             sliceData = dt.Dati
         }
+
+        /// FUNZIONE PER ORDINARE DA FARE
     TB =
     <div>
-        <Button onClick={dispatch(()=>OrderById())}>Ordina</Button>
+        <Button onClick={()=>dispatch(()=>OrderById(custoData))}>Ordina</Button>
     <table>
         <thead>
         <tr>

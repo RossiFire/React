@@ -58,7 +58,7 @@ export const CustomerSlice = createSlice({
     }
 })
 
-export const OrderById = (state) => _.orderBy(state.Dati, ['id'], ['asc']);
+export const OrderById = (state) => _.orderBy(state.Dati, ['id'], ['asc'])
 
 export const SelCustomerById = (state, datoId) =>{ state.Dati.find(dato => dato['id'] === datoId)}
 export const SelectAllCustomer = state => state.CustomerReducer.Dati

@@ -4,7 +4,8 @@ import * as _ from 'lodash'
 
 const initialState ={
     Dati : [],
-    stato : 'zero'
+    stato : 'zero',
+    head : ['id','nome','cognome','nascita','tipoutente','password','azioni']
 }
 
 
@@ -53,7 +54,7 @@ export const CustomerSlice = createSlice({
         },
         [fetchCustomerData.fulfilled] : (state,action)=>{
             state.stato = 'success'
-            state.Dati = state.Dati.concat(action.payload);
+            state.Dati = action.payload;
         },
         [fetchCustomerData.rejected] : (state)=>{
             state.stato = 'failed'
@@ -106,4 +107,4 @@ export const SelCustomerById = (state, datoId) =>{ state.ProvaSlice.Dati.find(da
 export const SelectAllCustomer = state => state.CustomerSlice.Dati
 
 export const {CustomerReducer} = CustomerSlice.actions
-export default CustomerSlice;
+export default CustomerSlice.reducer

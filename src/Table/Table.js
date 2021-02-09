@@ -40,21 +40,25 @@ function Table(props){
     }
 
     // dt : array di oggetti
-    const dt = useSelector(state => state.DataSlice)
-    if(dt.data.head){
-    sliceData = dt.data.payload.slice(0,6)
+    const dt = useSelector(state => state.customer)
+    if(dt.head){
+        if(dt.Dati.length > 6){
+            sliceData = dt.Dati.slice(0,6)
+        }else{
+            sliceData = dt.Dati
+        }
     TB =
     <div>
     <table>
         <thead>
         <tr>
-            {dt.data.head.map(col => <th key={col}>{col}</th>)}
+            {dt.head.map(col => <th key={col}>{col}</th>)}
         </tr>
         </thead>
         <tbody>
             {sliceData.map((dato) => 
             <tr>
-                {dt.data.head.map(col =>{
+                {dt.head.map(col =>{
                     if(col === 'tipomezzo'){
                         return <td key={dato['id']+dato[col]}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
@@ -66,6 +70,8 @@ function Table(props){
                         if(dato[col])
                             return <td key={dato['id']+dato[col]}>Si</td>
                         return <td key={dato['id']+dato[col]}>No</td>
+                    }if(col === 'tipoutente'){
+                        return <td key={dato['id']+dato[col] + Math.random() *100}>{dato[col]['tipo']}</td>
                     }
                     if(col === 'azioni'){
                         return <td>

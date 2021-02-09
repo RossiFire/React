@@ -11,6 +11,9 @@ table{
 table tr *{
     padding: 5px 10px;
 }
-table button{
+[type=button]{
     border-radius: 0 !important;
+    font-size: 15px;
+    padding: 5px;
+    margin: 1px;
 }

@@ -1,17 +1,30 @@
 import './form.css'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function AppForm(props){
-    let tipo = useSelector(state => state.customer)
+    let misc = useSelector(state => state.customer)
     let form = ""   
 
-    if(tipo.data.head){
+    let [nome, setNome] = useState('')
+    let [cognome, setCogome] = useState('')
+    let [password, setPassword] = useState('')
+    let [tipoutente, setTipoutente] = useState(0)
+    let [nascita, setNascita] = useState('')
+
+    let tempUtente = { id: '', nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
+
+    const handleInput =(col, event)=>{
+        console.log(tempUtente)
+        console.log(event.target.value)
+        tempUtente[col] = event.target.value 
+    }
+    if(misc.head){
       form= <div className="form-body">
         {
-            tipo.data.head.map(col=>{
+            misc.head.map(col=>{
                 if(col !== 'azioni'){
                     if(col === 'tipomezzo'){
                         return   <div><input type="radio" name="tipomezzo" value="1" />
@@ -22,6 +35,11 @@ function AppForm(props){
                         <label for="other">Furgone</label>
                         <input type="radio" name="tipomezzo" value="4" />
                         <label for="other">SUV</label></div>
+                    }if(col === 'tipoutente'){
+                        return  <div><input type="radio" name="tipoutente" value="1" />
+                        <label for="admin">Admin</label><br/>
+                        <input type="radio" name="tipoutente" value="2" />
+                        <label for="customer">Customer</label><br/></div>
                     }
                     if(props.dato){
                             if(col === 'utentePrenotato'){
@@ -31,7 +49,7 @@ function AppForm(props){
                             }
                             return <input type="text" placeholder={col} value={props.dato[col]}></input>     
                     }else{
-                        return <input type="text" placeholder={col}></input>
+                        return <input type="text" placeholder={col} value={tempUtente.col} onChange={(event)=>handleInput(col,event)}></input>
                     }
                 }
             })
@@ -40,12 +58,10 @@ function AppForm(props){
             props.button ?(
                 <div>
                     <Button variant="warning">Modifica</Button>
-                    <h2>{props.button}</h2>
                 </div>
             ) :(
                 <div>
                     <Button variant="dark">Aggiungi</Button>
-                    <h2>{props.button}</h2>
                 </div>
             )    
         }

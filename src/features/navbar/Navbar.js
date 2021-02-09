@@ -10,6 +10,9 @@ import {fetchCustomerData} from '../../Table/CustomerSlice'
 
 export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
     const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(fetchCustomerData())
+    })
     return(
         <div>
             <Navbar expand="sm" className="navbar">

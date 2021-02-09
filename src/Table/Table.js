@@ -23,7 +23,7 @@ function Table(props){
         }
     TB =
     <div>
-        <Button onClick={()=>OrderById()}>Ordina</Button>
+        <Button onClick={dispatch(()=>OrderById())}>Ordina</Button>
     <table>
         <thead>
         <tr>

@@ -14,6 +14,17 @@ export const fetchCustomerData = createAsyncThunk('customer/fetchCustomer', asyn
     return response.data
   })
 
+export const addCustomer = createAsyncThunk('customer/add', async utente =>{
+    await axios.post("http://localhost:8050/utenti/aggiungi", utente)
+    const response = await axios.get(`http://localhost:8050/utenti/singolo/${utente.id}`)
+    return response.data
+})
+
+export const modCustomer = createAsyncThunk('customer/mod', async utente =>{
+    const response = await axios.post(`http://localhost:8050/utenti/modifica`, utente)
+    return response.data
+})
+
 
 export const CustomerSlice = createSlice({
     name : 'customer',
@@ -46,26 +57,36 @@ export const CustomerSlice = createSlice({
         },
         [fetchCustomerData.rejected] : (state)=>{
             state.stato = 'failed'
+        },
+        [addCustomer.fulfilled] : (state,action)=>{
+            state.Dati.push(action.payload)
+        },
+        [modCustomer.fulfilled] : (state,action)=>{
+/*             state.Dati = _.reduce(state.Dati, {'id' : action.payload.id}), */
+            state.Dati.push(action.payload)
         }
     }
 })
 
 
-
-//THUNK
-export const ThunkAggiungiCustomer =(state,utente) =>{
-    return(dispatch)=>{
-        axios.post("http://localhost:8050/utenti/aggiungi", utente)
-        dispatch(CustomerReducer(OperazioniAction(utente, 'AGGIUNGI')))
-    }
-}
-
-export const ThunkModificaCustomer = (state,utente) =>{
+/* export const ThunkModificaCustomer = (state,utente) =>{
     axios.get(`http://localhost:8050/utenti/modifica/${utente.id}`)
     .then(()=>{
         return(dispatch)=>{
             axios.post("http://localhost:8050/utenti/modifica", utente)
             dispatch(CustomerReducer(OperazioniAction(utente, 'AGGIUNGI')))
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+}
+
+export const ThunkEliminaCustomer = (state,customer) =>{
+    axios.get(`http://localhost:8050/customer/elimina/${customer.id}`)
+    .then(()=>{
+        return(dispatch)=>{
+            dispatch(CustomerReducer(OperazioniAction(customer,'ELIMINA')))
         }
     })
     .catch(error=>{
@@ -79,10 +100,10 @@ const OperazioniAction = (data, operazione)=>{
         payload : data,
         TipoOperazione : operazione
     }
-}
+} */
 
-export const SelById = (state, datoId) =>{ state.ProvaSlice.Dati.find(dato => dato['id'] === datoId)}
-export const SelectAll = state => state.ProvaSlice.Dati
+export const SelCustomerById = (state, datoId) =>{ state.ProvaSlice.Dati.find(dato => dato['id'] === datoId)}
+export const SelectAllCustomer = state => state.CustomerSlice.Dati
 
 export const {CustomerReducer} = CustomerSlice.actions
-export default CustomerSlice
+export default CustomerSlice;

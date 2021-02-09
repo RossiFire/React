@@ -3,7 +3,6 @@ import './navbar.css'
 import Table from '../../Table/Table'
 import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux';
-import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from './DataSlice'
 import { CustomerReducer, MezziReducer, PrenotazioniReducer,} from '../../Table/ProvaSlice'
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,9 +10,6 @@ import {fetchCustomerData} from '../../Table/CustomerSlice'
 
 export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
     const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch(fetchCustomerData())
-    })
     return(
         <div>
             <Navbar expand="sm" className="navbar">
@@ -23,9 +19,9 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
                    {/*  <Nav.Link><button onClick={() => dispatch(()=>fetchCustomer())}>Customer</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link> */}
-                     <Nav.Link><button onClick={() =>dispatch(()=>console.log('ok'))}>Customer</button></Nav.Link>
-                    <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
-                    <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link>
+                     <Nav.Link><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Nav.Link>
+                    <Nav.Link><button onClick={() => dispatch(()=>console.log('o'))}>Parco auto</button></Nav.Link>
+                    <Nav.Link><button onClick={() => dispatch(()=>console.log('o'))}>Prenotazioni</button></Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -36,7 +32,7 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
 }
 
 
-const MapStateToProps = state =>{
+/* const MapStateToProps = state =>{
     return{
         data : state.type
     }
@@ -47,5 +43,6 @@ const MapDispatchProps = dispatch =>{
         fetchMezzi : ()=> dispatch(fetchMezzi()),
         fetchPrenotazioni : ()=> dispatch(fetchPrenotazioni())
     }
-}
-export default connect(MapStateToProps, MapDispatchProps)(AppNavbar);
+} */
+
+export default AppNavbar;

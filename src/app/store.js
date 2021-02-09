@@ -8,7 +8,7 @@ export default configureStore({
   reducer: {
     DataSlice : DataSlice,
     ProvaSlice :ProvaSlice,
-    CustomerSlice : CustomerSlice
+    customer : CustomerSlice
   }
 }, 
 applyMiddleware(thunk)

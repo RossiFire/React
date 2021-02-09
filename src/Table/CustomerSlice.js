@@ -30,24 +30,7 @@ export const modCustomer = createAsyncThunk('customer/mod', async utente =>{
 export const CustomerSlice = createSlice({
     name : 'customer',
     initialState,
-    reducers:{
-        CustomerReducer(state,action){
-            switch(action.TipoOperazione){
-                case 'MODIFICA':
-                    const customerEsistente = state.CustomerReducer.Dati.find(dato => dato.id === id)
-                    const {id, nome,cognome,password} = action.payload
-                    if(customerEsistente){
-                        customerEsistente['nome'] = nome
-                        customerEsistente['cognome'] = cognome
-                        customerEsistente['password'] = password
-                    } 
-                case 'AGGIUNGI':
-                    state.Dati.push(action.payload)
-                case 'ELIMINA':
-                    state.Dati = _.reject(state.Dati, { 'id': action.payload['id']});
-            }
-        }
-    },
+    reducers:{},
     extraReducers:{
         [fetchCustomerData.pending]: (state,action)=> {
             state.stato = 'loading'
@@ -69,42 +52,9 @@ export const CustomerSlice = createSlice({
     }
 })
 
-
-/* export const ThunkModificaCustomer = (state,utente) =>{
-    axios.get(`http://localhost:8050/utenti/modifica/${utente.id}`)
-    .then(()=>{
-        return(dispatch)=>{
-            axios.post("http://localhost:8050/utenti/modifica", utente)
-            dispatch(CustomerReducer(OperazioniAction(utente, 'AGGIUNGI')))
-        }
-    })
-    .catch(error=>{
-        console.log(error)
-    })
-}
-
-export const ThunkEliminaCustomer = (state,customer) =>{
-    axios.get(`http://localhost:8050/customer/elimina/${customer.id}`)
-    .then(()=>{
-        return(dispatch)=>{
-            dispatch(CustomerReducer(OperazioniAction(customer,'ELIMINA')))
-        }
-    })
-    .catch(error=>{
-        console.log(error)
-    })
-}
-
-// ACTIONS
-const OperazioniAction = (data, operazione)=>{
-    return{
-        payload : data,
-        TipoOperazione : operazione
-    }
-} */
-
 export const SelCustomerById = (state, datoId) =>{ state.ProvaSlice.Dati.find(dato => dato['id'] === datoId)}
 export const SelectAllCustomer = state => state.CustomerSlice.Dati
+export const SelectHeader = (state) => state.head
 
 export const {CustomerReducer} = CustomerSlice.actions
 export default CustomerSlice.reducer

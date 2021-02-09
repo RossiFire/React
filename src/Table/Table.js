@@ -4,40 +4,13 @@ import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './table.css'
 import axios from 'axios'
-import {fetchCustomer, fetchMezzi, fetchPrenotazioni} from '../features/navbar/DataSlice'
 
 function Table(props){
     let TB = ''
     let sliceData;
-    let tbOperation = useSelector(state => state.DataSlice.data.typeData)
+    let tbOperation = useSelector(state => state.customer.Dati)
     const dispatch = useDispatch();
     
-    //eliminazione di un dato in base all'id
-    const DeleteById=(id)=>{
-        axios.get(`http://localhost:8050/${tbOperation}/elimina/${id}`)
-        .then(()=>{
-            switch(tbOperation){
-                case 'utenti':
-                    dispatch(fetchCustomer())
-                    console.log("utenti")
-                    break;
-                case 'mezzi':
-                    dispatch(fetchMezzi())
-                    console.log("mezzi")
-                    break;
-                case 'prenotazioni':
-                    dispatch(fetchPrenotazioni())
-                    console.log("prenot")
-                    break;
-                default:
-                    console.log("def")
-                    alert("Errore")
-            }
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-    }
 
     // dt : array di oggetti
     const dt = useSelector(state => state.customer)
@@ -76,7 +49,7 @@ function Table(props){
                     if(col === 'azioni'){
                         return <td>
                         <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button>
-                        <Button variant="danger" onClick={()=>DeleteById(dato['id'])}>Elimina</Button>
+                        <Button variant="danger" onClick={()=>console.log('a')}>Elimina</Button>
                         </td>
                     }
                     return <td key={dato['id']+dato[col]}>{dato[col]}</td>

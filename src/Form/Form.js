@@ -8,17 +8,9 @@ function AppForm(props){
     let misc = useSelector(state => state.customer)
     let form = ""   
 
-    let [nome, setNome] = useState('')
-    let [cognome, setCogome] = useState('')
-    let [password, setPassword] = useState('')
-    let [tipoutente, setTipoutente] = useState(0)
-    let [nascita, setNascita] = useState('')
-
     let tempUtente = { id: '', nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
 
     const handleInput =(col, event)=>{
-        console.log(tempUtente)
-        console.log(event.target.value)
         tempUtente[col] = event.target.value 
     }
     if(misc.head){

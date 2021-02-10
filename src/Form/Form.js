@@ -3,16 +3,27 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {addCustomer, modCustomer} from '../Table/CustomerSlice'
+import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../Table/CustomerSlice'
+import {Link} from 'react-router-dom'
+import * as _ from 'lodash'
 
 function AppForm(props){
+    // Initial Declaration
     const dispatch = useDispatch()
-    let misc = useSelector(state => state.customer)
-    let form = ""   
-
+    const state = useSelector(state => state)
     let tempUtente = { id: undefined, nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
+    let isAdding = true;
+    let misc = useSelector(state => state.customer)
+    let form  
 
-    const handleInput =(col, event)=>{
+    // Checking Aggiungi/Modifica
+    if(props.match.params.id){
+        isAdding = false;
+        //console.log(props.match.url.split("/")[1])
+        tempUtente =  SelCustomerById(state,props.match.params.id) 
+    }
+
+    const handleInput = (col, event)=>{
         switch(col){
             case 'tipoutente':
                 if(parseInt(event.target.value) === 1){
@@ -31,8 +42,13 @@ function AppForm(props){
                 break
         }
     }
-    const handleClick =()=>{
+
+    const handleAggiunta =()=>{
         dispatch(addCustomer(tempUtente));
+    }
+    const handleModifica = ()=>{
+        console.log(tempUtente)
+        //dispatch(addCustomer(tempUtente));
     }
     if(misc.head){
       form= <div className="form-body">
@@ -54,27 +70,27 @@ function AppForm(props){
                         <input type="radio" name="tipoutente" value="2" onClick={(event)=>handleInput(col,event)}/>
                         <label for="customer">Customer</label><br/></div>
                     }
-                    if(props.dato){
-                            if(col === 'utentePrenotato'){
-                                return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
-                            }if(col === 'mezzoPrenotato'){
-                                return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
-                            }
-                            return <input type="text" placeholder={col} value={props.dato[col]}></input>     
-                    }else{
-                        return <input type="text" placeholder={col} value={tempUtente.col} onChange={(event)=>handleInput(col,event)}></input>
+                    if(col === 'utentePrenotato'){
+                        return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
+                    }if(col === 'mezzoPrenotato'){
+                        return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
                     }
+                   /*  return <input type="text" placeholder={col} value={props.dato[col]}></input>      */
+                    
+                     return <input type="text" placeholder={col} value={tempUtente[col]} onChange={(event)=>handleInput(col,event)}></input>
+                    
                 }
             })
         }    
         {
-            props.button ?(
+            isAdding ?(
                 <div>
-                    <Button variant="warning" onClick={()=>handleClick()}>Modifica</Button>
+                   <Link to="/"><Button variant="warning" onClick={()=>handleAggiunta()}>Aggiungi</Button></Link>
                 </div>
             ) :(
                 <div>
-                    <Button variant="dark" onClick={()=>handleClick()}>Aggiungi</Button>
+                   <Link to="/"><Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button></Link>
+                   <Link to="/aggiungi"><Button variang="white">Resetta</Button></Link>
                 </div>
             )    
         }

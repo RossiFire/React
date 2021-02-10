@@ -58,11 +58,10 @@ export const CustomerSlice = createSlice({
     }
 })
 
-export const OrderById = (state) => _.orderBy(state.Dati, ['id'], ['asc'])
-
-export const SelCustomerById = (state, datoId) =>{ state.Dati.find(dato => dato['id'] === datoId)}
-export const SelectAllCustomer = state => state.CustomerReducer.Dati
+export const SelCustomerById = (state, datoId) =>{ return _.find(state.customer.Dati, {'id' : parseInt(datoId)})}
+export const SelectAllCustomer = state =>{return state.customer.Dati}
 export const SelectHeader = (state) => state.head
+
 
 export const {CustomerReducer} = CustomerSlice.actions
 export default CustomerSlice.reducer

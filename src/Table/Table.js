@@ -4,18 +4,18 @@ import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {delCustomer, OrderById} from '../Table/CustomerSlice'
 import './table.css'
-import axios from 'axios'
+import * as _ from 'lodash'
+import {Link} from 'react-router-dom'
+import {nanoid} from 'nanoid'
 
-function Table(props){
+function Table(){
     let TB = ''
     let sliceData;
-    let tbOperation = useSelector(state => state.customer.Dati)
     const dispatch = useDispatch();
-    
+    let dt
 
     // dt : array di oggetti
-    const dt = useSelector(state => state.customer)
-    let custoData = useSelector(state => state.customer.Dati)
+    dt = useSelector(state => state.customer)
     if(dt.head){
         if(dt.Dati.length > 6){
             sliceData = dt.Dati.slice(0,6)
@@ -24,9 +24,15 @@ function Table(props){
         }
 
         /// FUNZIONE PER ORDINARE DA FARE
+
+    function OrderById(){
+        console.log(sliceData)
+        sliceData =_.orderBy(sliceData, ['id'],['asc'])
+        console.log(sliceData)
+    }
     TB =
     <div>
-        <Button onClick={()=>dispatch(()=>OrderById(custoData))}>Ordina</Button>
+        <Button onClick={()=>OrderById()}>Ordina</Button>
     <table>
         <thead>
         <tr>
@@ -38,26 +44,28 @@ function Table(props){
             <tr>
                 {dt.head.map(col =>{
                     if(col === 'tipomezzo'){
-                        return <td key={Math.random() *100}>{dato[col]['tipo']}</td>
+                        return <td key={nanoid()}>{dato[col]['tipo']}</td>
                     }if(col === 'utentePrenotato'){
-                        return <td key={Math.random() *100}>{dato[col]['nome']}</td>
+                        return <td key={nanoid()}>{dato[col]['nome']}</td>
                     }
                     if(col === 'mezzoPrenotato'){
-                        return <td key={Math.random() *100}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                        return <td key={nanoid()}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                     }if(col === 'approvata'){
                         if(dato[col])
-                            return <td key={Math.random() *100}>Si</td>
-                        return <td key={Math.random() *100}>No</td>
+                            return <td key={nanoid()}>Si</td>
+                        return <td key={nanoid()}>No</td>
                     }if(col === 'tipoutente'){
-                        return <td key={Math.random() *100}>{dato[col]['tipo']}</td>
+                        return <td key={nanoid()}>{dato[col]['tipo']}</td>
                     }
                     if(col === 'azioni'){
                         return <td>
-                        {/* <Button variant="warning" onClick={()=>props.onClick(tbOperation,dato['id'], 'modifica')}>Modifica</Button> */}
+                        <Link to={`/customer/${dato['id']}`}>
+                            <Button variant="warning">Modifica</Button>
+                        </Link>
                         <Button variant="danger" onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
                         </td>
                     }
-                    return <td key={Math.random() *100}>{dato[col]}</td>
+                    return <td key={nanoid()}>{dato[col]}</td>
                 }
                 )}
             </tr>

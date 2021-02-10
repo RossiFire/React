@@ -3,8 +3,10 @@
     top: 40%;
     left: 50%;
     transform: translate(-50%,-40%);
+    width: 80%;
 }
 table{
+    width: 100%;
     text-align: center;
     border: 2px solid lightblue;
 }

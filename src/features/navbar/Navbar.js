@@ -7,6 +7,7 @@ import { CustomerReducer, MezziReducer, PrenotazioniReducer,} from '../../Table/
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {fetchCustomerData} from '../../Table/CustomerSlice'
+import {Link} from 'react-router-dom'
 
 export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
     const dispatch = useDispatch()
@@ -19,33 +20,15 @@ export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                   {/*  <Nav.Link><button onClick={() => dispatch(()=>fetchCustomer())}>Customer</button></Nav.Link>
-                    <Nav.Link><button onClick={() => dispatch(()=>fetchMezzi())}>Parco auto</button></Nav.Link>
-                    <Nav.Link><button onClick={() => dispatch(()=>fetchPrenotazioni())}>Prenotazioni</button></Nav.Link> */}
-                     <Nav.Link><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Nav.Link>
-                    <Nav.Link><button onClick={() => dispatch(()=>console.log('o'))}>Parco auto</button></Nav.Link>
+                    <Nav.Link><Link to="/"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link></Nav.Link>
+                    <Nav.Link><Link><button>Parco auto</button></Link></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>console.log('o'))}>Prenotazioni</button></Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Table/>
         </div>
 
             )
 }
-
-
-/* const MapStateToProps = state =>{
-    return{
-        data : state.type
-    }
-}
-const MapDispatchProps = dispatch =>{
-    return{
-        fetchCustomer : ()=> dispatch(fetchCustomer()),
-        fetchMezzi : ()=> dispatch(fetchMezzi()),
-        fetchPrenotazioni : ()=> dispatch(fetchPrenotazioni())
-    }
-} */
 
 export default AppNavbar;

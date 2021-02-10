@@ -12,7 +12,8 @@ function AggiungiForm(props){
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     let isAdding = true;
-    let tempUtente = { id: undefined, nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
+    let tempUtente
+    tempUtente = { id: undefined, nome :undefined, cognome:undefined, tipoutente:{id:0, tipo:undefined}, password : undefined, nascita : undefined}
     let misc = useSelector(state => state.customer)
     let form  
     
@@ -44,29 +45,31 @@ function AggiungiForm(props){
         {
             misc.head.map(col=>{
                 if(col !== 'azioni'){
-                    if(col === 'tipomezzo'){
-                        return   <div><input type="radio" name="tipomezzo" value="1" />
-                        <label for="male">Minivan</label><br/>
-                        <input type="radio" name="tipomezzo" value="2" />
-                        <label for="female">Autoveicolo</label><br/>
-                        <input type="radio" name="tipomezzo" value="3" />
-                        <label for="other">Furgone</label>
-                        <input type="radio" name="tipomezzo" value="4" />
-                        <label for="other">SUV</label></div>
-                    }if(col === 'tipoutente'){
-                        return  <div><input type="radio" name="tipoutente" value="1"  onClick={(event)=>handleInput(col,event)} />
-                        <label for="admin">Admin</label><br/>
-                        <input type="radio" name="tipoutente" value="2" onClick={(event)=>handleInput(col,event)}/>
-                        <label for="customer">Customer</label><br/></div>
+                    if(col !== 'id'){
+                        if(col === 'tipomezzo'){
+                            return   <div><input type="radio" name="tipomezzo" value="1" />
+                            <label for="male">Minivan</label><br/>
+                            <input type="radio" name="tipomezzo" value="2" />
+                            <label for="female">Autoveicolo</label><br/>
+                            <input type="radio" name="tipomezzo" value="3" />
+                            <label for="other">Furgone</label>
+                            <input type="radio" name="tipomezzo" value="4" />
+                            <label for="other">SUV</label></div>
+                        }if(col === 'tipoutente'){
+                            return  <div><input type="radio" name="tipoutente" value="1"  onClick={(event)=>handleInput(col,event)} />
+                            <label for="admin">Admin</label><br/>
+                            <input type="radio" name="tipoutente" value="2" onClick={(event)=>handleInput(col,event)}/>
+                            <label for="customer">Customer</label><br/></div>
+                        }
+                        if(col === 'utentePrenotato'){
+                            return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
+                        }if(col === 'mezzoPrenotato'){
+                            return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
+                        }
+                       /*  return <input type="text" placeholder={col} value={props.dato[col]}></input>      */
+                        
+                         return <input type="text" placeholder={col} value={tempUtente[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
-                    if(col === 'utentePrenotato'){
-                        return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
-                    }if(col === 'mezzoPrenotato'){
-                        return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
-                    }
-                   /*  return <input type="text" placeholder={col} value={props.dato[col]}></input>      */
-                    
-                     return <input type="text" placeholder={col} value={tempUtente[col]} onChange={(event)=>handleInput(col,event)}></input>
                     
                 }
             })

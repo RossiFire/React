@@ -47,7 +47,7 @@ function ModificaForm(props){
       form= <div className="form-body">
         {
             misc.head.map(col=>{
-                if(col !== 'azioni'){
+                if(col !== 'azioni' || col !== 'id'){
                     if(col === 'tipomezzo'){
                         return   <div><input type="radio" name="tipomezzo" value="1" />
                         <label for="male">Minivan</label><br/>

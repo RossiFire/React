@@ -16,8 +16,10 @@ export const fetchCustomerData = createAsyncThunk('customer/fetchCustomer', asyn
   })
 
 export const addCustomer = createAsyncThunk('customer/add', async utente =>{
-    await axios.post("http://localhost:8050/utenti/aggiungi", utente)
-    const response = await axios.get(`http://localhost:8050/utenti/singolo/${utente.id}`)
+    console.log(utente)
+    const response = await axios.post("http://localhost:8050/utenti/aggiungi", utente)
+    /* const response = await axios.get(`http://localhost:8050/utenti/singolo/${utente.id}`) */
+    console.log(response.data)
     return response.data
 })
 

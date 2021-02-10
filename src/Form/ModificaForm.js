@@ -14,29 +14,27 @@ function ModificaForm(props){
     let tempUtente = SelCustomerById(state,props.match.params.id) 
     let misc = useSelector(state => state.customer)
     let form  
-    let ModelUtente = useState(tempUtente)
-    ModelUtente = ModelUtente[0]
+    let [ModelUtente, setDato] = useState(tempUtente)
     
         //controllo utente-mezzi-prenotazioni
         //console.log(props.match.url.split("/")[1])
 
-    const handleInput = (col, event)=>{
-
+    const handleInput = (col, e)=>{
         switch(col){
             case 'tipoutente':
-                if(parseInt(event.target.value) === 1){
-                    ModelUtente[col]['id'] = parseInt(event.target.value)
+                if(parseInt(e.target.value) === 1){
+                    ModelUtente[col]['id'] = parseInt(e.target.value)
                     ModelUtente[col]['tipo'] = "ADMIN"
                 }else{
-                    ModelUtente[col]['id'] = parseInt(event.target.value)
+                    ModelUtente[col]['id'] = parseInt(e.target.value)
                     ModelUtente[col]['tipo'] = "CUSTOMER"
                 }
-                break;
+                break
             case 'id':
-                ModelUtente[col] = parseInt(event.target.value)
-                break;
+                ModelUtente[col] = parseInt(e.target.value)
+                break
             default :
-                ModelUtente[col] = event.target.value 
+                setDato(e.target.value)
                 break
         }
     }

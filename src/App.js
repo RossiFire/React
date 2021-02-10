@@ -7,7 +7,8 @@ import {
 import './App.css';
 import AppNavbar from './features/navbar/Navbar';
 import AppTable from './Table/Table'
-import AppForm from './Form/Form'
+import AggiungiForm from './Form/AggiungiForm'
+import ModificaForm from './Form/ModificaForm'
 
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
       <AppNavbar />
         <Switch>
           <Route path="/" exact component={AppTable} />
-          <Route path="/customer/:id" exact component={AppForm} />
-          <Route path="/aggiungi" exact component={AppForm}/>
+          <Route path="/customer/:id" exact component={ModificaForm} />
+          <Route path="/aggiungi" exact component={AggiungiForm}/>
         </Switch>
       </div>
     </Router>

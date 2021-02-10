@@ -58,7 +58,7 @@ export const CustomerSlice = createSlice({
     }
 })
 
-export const SelCustomerById = (state, datoId) =>{ return _.find(state.customer.Dati, {'id' : parseInt(datoId)})}
+export const SelCustomerById = (state, datoId) =>{return  _.find(state.customer.Dati, {'id' : parseInt(datoId)})}
 export const SelectAllCustomer = state =>{return state.customer.Dati}
 export const SelectHeader = (state) => state.head
 

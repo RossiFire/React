@@ -7,22 +7,15 @@ import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../T
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
 
-function AppForm(props){
+function AggiungiForm(props){
     // Initial Declaration
     const dispatch = useDispatch()
     const state = useSelector(state => state)
-    let tempUtente = { id: undefined, nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
     let isAdding = true;
+    let tempUtente = { id: undefined, nome :'', cognome:'', tipoutente:{id:0, tipo:''}, password : '', nascita : ''}
     let misc = useSelector(state => state.customer)
     let form  
-
-    // Checking Aggiungi/Modifica
-    if(props.match.params.id){
-        isAdding = false;
-        //console.log(props.match.url.split("/")[1])
-        tempUtente =  SelCustomerById(state,props.match.params.id) 
-    }
-
+    
     const handleInput = (col, event)=>{
         switch(col){
             case 'tipoutente':
@@ -45,10 +38,6 @@ function AppForm(props){
 
     const handleAggiunta =()=>{
         dispatch(addCustomer(tempUtente));
-    }
-    const handleModifica = ()=>{
-        console.log(tempUtente)
-        //dispatch(addCustomer(tempUtente));
     }
     if(misc.head){
       form= <div className="form-body">
@@ -83,16 +72,9 @@ function AppForm(props){
             })
         }    
         {
-            isAdding ?(
                 <div>
                    <Link to="/"><Button variant="warning" onClick={()=>handleAggiunta()}>Aggiungi</Button></Link>
-                </div>
-            ) :(
-                <div>
-                   <Link to="/"><Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button></Link>
-                   <Link to="/aggiungi"><Button variang="white">Resetta</Button></Link>
-                </div>
-            )    
+                </div> 
         }
         </div>
     }else{
@@ -108,4 +90,4 @@ function AppForm(props){
 }
 
 
-export default AppForm;
+export default AggiungiForm;

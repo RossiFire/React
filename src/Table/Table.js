@@ -2,7 +2,9 @@ import React, { Component, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {delCustomer, OrderById, fetchCustomerData} from '../Table/CustomerSlice'
+import {delCustomer} from '../Table/CustomerSlice'
+import {delMezzo} from '../Table/MezziSlice'
+import {delPrenotazione} from '../Table/PrenotazioniSlice'
 import './table.css'
 import * as _ from 'lodash'
 import {Link} from 'react-router-dom'
@@ -10,21 +12,29 @@ import {nanoid} from 'nanoid'
 
 function Table(props){
     let TB = ''
+    let data = []
     let sliceData;
     const dispatch = useDispatch();
     let dt
-    let data = []
-    let operazione;
-    if(props.match.url.split("/")[1] === 'customer'){
-        operazione = fetchCustomerData()
-    }else{
-        operazione = fetchCustomerData()
+    let state = useSelector(state => state);
+
+    //  Checking Customer-Mezzi-Prenotazioni
+    switch(props.match.url.split("/")[1]){
+        case 'customer':
+            dt = state.customer
+            break;
+        case 'parcoauto':
+            dt = state.mezzi
+            break;
+        case 'prenotazioni':
+            dt = state.prenotazioni
+            break;
+        default:
+            dt = state.customer
+            break;
     }
-    useEffect(()=>{
-        dispatch(operazione)
-    },[])
-    data = useSelector(state => state.customer.Dati)
-    dt = useSelector(state => state.customer)
+
+    data = dt.Dati
 
     if(dt.head){
         if(data.length > 6){
@@ -66,14 +76,38 @@ function Table(props){
                         return <td key={nanoid()}>No</td>
                     }if(col === 'tipoutente'){
                         return <td key={nanoid()}>{dato[col]['tipo']}</td>
+                    }if(col === 'dataInizio' || col === 'dataFine'){
+                        return <td key={nanoid()}>{dato[col].split('T')[0]}</td>
                     }
+
                     if(col === 'azioni'){
-                        return <td>
-                        <Link to={`/customer/${dato['id']}`}>
-                            <Button variant="warning">Modifica</Button>
-                        </Link>
-                        <Button variant="danger" onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
-                        </td>
+                        switch(props.match.url.split("/")[1]){
+                            case 'customer':
+                                return <td>
+                                <Link to={`/customer/${dato['id']}`}>
+                                    <Button variant="warning">Modifica</Button>
+                                </Link>
+                                <Button variant="danger" onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
+                                </td>
+                            case 'parcoauto':
+                                return <td>
+                                <Link to={`/parcoauto/${dato['id']}`}>
+                                    <Button variant="warning">Modifica</Button>
+                                </Link>
+                                <Button variant="danger" onClick={()=>dispatch(delMezzo(dato['id']))}>Elimina</Button>
+                                </td>
+                            case 'prenotazioni':
+                                return <td>
+                                <Link to={`/prenotazioni/${dato['id']}`}>
+                                    <Button variant="warning">Modifica</Button>
+                                </Link>
+                                <Button variant="danger" onClick={()=>dispatch(delPrenotazione(dato['id']))}>Elimina</Button>
+                                </td>
+                                break;
+                            default:
+                                dt = state.customer
+                                break;
+                        }
                     }
                     return <td key={nanoid()}>{dato[col]}</td>
                 }

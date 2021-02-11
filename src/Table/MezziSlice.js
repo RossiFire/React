@@ -4,7 +4,8 @@ import * as _ from 'lodash'
 
 const initialState ={
     Dati : [],
-    stato : 'zero'
+    stato : 'zero',
+    head : ['id','casaCostr','modello','targa','tipomezzo','azioni']
 }
 
 
@@ -15,8 +16,7 @@ export const fetchMezziData = createAsyncThunk('mezzi/fetchMezzi', async () => {
   })
 
 export const addMezzo = createAsyncThunk('mezzo/add', async mezzo =>{
-    await axios.post("http://localhost:8050/mezzi/aggiungi", mezzo)
-    const response = await axios.get(`http://localhost:8050/mezzi/singolo/${mezzo.id}`)
+    const response = await axios.post("http://localhost:8050/mezzi/aggiungi", mezzo)
     return response.data
 })
 
@@ -58,4 +58,4 @@ export const SelMezzoById = (state, datoId) =>{ state.MezziSlice.Dati.find(dato 
 export const SelectAllMezzi = state => state.MezziSlice.Dati
 
 export const {MezziReducer} = MezziSlice.actions
-export default MezziSlice
+export default MezziSlice.reducer

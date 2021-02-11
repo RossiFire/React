@@ -33,11 +33,7 @@ export const delCustomer = createAsyncThunk('customer/del', async id =>{
 export const CustomerSlice = createSlice({
     name : 'customer',
     initialState,
-    reducers:{
-        RefreshCustomer: (state,action)=>{
-            state.Dati = action.payload
-        }
-    },
+    reducers:{},
     extraReducers:{
         [fetchCustomerData.pending]: (state,action)=> {
             state.stato = 'loading'
@@ -65,6 +61,4 @@ export const SelCustomerById = (state, datoId) =>{return  _.find(state.customer.
 export const SelectAllCustomer = state =>{return state.customer.Dati}
 export const SelectHeader = (state) => state.head
 
-
-export const {CustomerReducer, AddCustomerReducer, RefreshCustomer} = CustomerSlice.actions
 export default CustomerSlice.reducer

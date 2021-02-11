@@ -40,14 +40,14 @@ function ModificaForm(props){
                 console.log('non dovrebbe entrare qua')
                 break
         } 
-
     modelDato = _.cloneDeep(tempDato)
+    
     const handleInput = (col, event) =>{
         console.log(event.target.value)
         if(col === 'tipoutente'){
             modelDato[col]['id'] = parseInt(event.target.value)
         }else if(col === 'id'){
-            modelDato[col]['id'] = parseInt(event.target.value)
+            modelDato['id'] = parseInt(event.target.value)
         }else{
             modelDato[col] = event.target.value
             console.log(modelDato)

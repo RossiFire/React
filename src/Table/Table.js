@@ -2,25 +2,31 @@ import React, { Component, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {delCustomer, OrderById} from '../Table/CustomerSlice'
+import {delCustomer, OrderById, fetchCustomerData} from '../Table/CustomerSlice'
 import './table.css'
 import * as _ from 'lodash'
 import {Link} from 'react-router-dom'
 import {nanoid} from 'nanoid'
 
 function Table(){
+
     let TB = ''
     let sliceData;
     const dispatch = useDispatch();
     let dt
-
-    // dt : array di oggetti
+    let data = []
+    useEffect(()=>{
+        dispatch(fetchCustomerData())
+    },[])
+    data = useSelector(state => state.customer.Dati)
+    
     dt = useSelector(state => state.customer)
+
     if(dt.head){
-        if(dt.Dati.length > 6){
-            sliceData = dt.Dati.slice(0,6)
+        if(data.length > 6){
+            sliceData = data.slice(0,6)
         }else{
-            sliceData = dt.Dati
+            sliceData = data
         }
 
         /// FUNZIONE PER ORDINARE DA FARE

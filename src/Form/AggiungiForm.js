@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../Table/CustomerSlice'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
+import {nanoid} from 'nanoid'
 
 function AggiungiForm(props){
     // Initial Declaration
@@ -38,7 +39,7 @@ function AggiungiForm(props){
     }
 
     const handleAggiunta =()=>{
-        dispatch(addCustomer(tempUtente));
+        dispatch(addCustomer(tempUtente))
     }
     if(misc.head){
       form= <div className="form-body">

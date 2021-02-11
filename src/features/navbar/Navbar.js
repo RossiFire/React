@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {fetchCustomerData} from '../../Table/CustomerSlice'
 import {Link} from 'react-router-dom'
 
-export function AppNavbar({ fetchCustomer, fetchMezzi, fetchPrenotazioni }){
+export function AppNavbar(){
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(fetchCustomerData())

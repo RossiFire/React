@@ -15,12 +15,14 @@ export const fetchCustomerData = createAsyncThunk('customer/fetchCustomer', asyn
     return response.data
   })
 
-export const addCustomer = createAsyncThunk('customer/add', async utente =>{
-    console.log(utente)
-    const response = await axios.post("http://localhost:8050/utenti/aggiungi", utente)
-    /* const response = await axios.get(`http://localhost:8050/utenti/singolo/${utente.id}`) */
-    console.log(response.data)
-    return response.data
+export const addCustomer = createAsyncThunk('customer/add', utente =>{
+    axios.post("http://localhost:8050/utenti/aggiungi", utente)
+    .then(async ()=>{
+        await axios.get('http://localhost:8050/utenti/customer')
+        .then(response=>{
+            return response
+        })
+    })
 })
 
 export const modCustomer = createAsyncThunk('customer/mod', async utente =>{
@@ -36,7 +38,11 @@ export const delCustomer = createAsyncThunk('customer/del', async id =>{
 export const CustomerSlice = createSlice({
     name : 'customer',
     initialState,
-    reducers:{},
+    reducers:{
+        RefreshCustomer: (state,action)=>{
+            state.Dati = action.payload
+        }
+    },
     extraReducers:{
         [fetchCustomerData.pending]: (state,action)=> {
             state.stato = 'loading'
@@ -49,7 +55,7 @@ export const CustomerSlice = createSlice({
             state.stato = 'failed'
         },
         [addCustomer.fulfilled] : (state,action)=>{
-            state.Dati.push(action.meta.arg)
+            state.Dati = action.payload
         },
         [modCustomer.fulfilled] : (state,action)=>{
             state.Dati.push(action.payload)
@@ -65,5 +71,5 @@ export const SelectAllCustomer = state =>{return state.customer.Dati}
 export const SelectHeader = (state) => state.head
 
 
-export const {CustomerReducer} = CustomerSlice.actions
+export const {CustomerReducer, AddCustomerReducer, RefreshCustomer} = CustomerSlice.actions
 export default CustomerSlice.reducer

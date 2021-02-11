@@ -20,7 +20,7 @@ function ModificaForm(props){
     dispatch(()=>fetchCustomerData())
     let misc
     let tempDato
-    
+    let modelDato
 
         //controllo utente-mezzi-prenotazioni
         switch(props.match.url.split("/")[1]){
@@ -39,31 +39,31 @@ function ModificaForm(props){
             default :
                 console.log('non dovrebbe entrare qua')
                 break
-        }
-        let [ModelDato, setDato] = useState(tempDato)
-    
-        console.log(misc)
-        console.log(ModelDato)  
-        console.log(userData)   
-        console.log(userData)
+        } 
 
-    const handleInput = (col, e)=>{
+    /* modelDato = _.cloneDeep(tempDato) */
+    modelDato = {id :0, nome : '', cognome : '', tipoutente: {id : 0, tipo :''}, nascita : '', password: ''}
+    const handleInput = (col, event) =>{
+        console.log(event.target.value)
         switch(col){
             case 'tipoutente':
-                    ModelDato[col]['id'] = parseInt(e.target.value)
+                    modelDato[col]['id'] = parseInt(event.target.value)
                 break
             case 'id':
-                    ModelDato[col] = parseInt(e.target.value)
+                    modelDato[col] = parseInt(event.target.value)
                 break
             default :
-                ModelDato[col] = e.target.value
-                break
+            modelDato[col] = event.target.value
+            break
         }
+        console.log(modelDato)
     }
+
+    
     
 
     const handleModifica = ()=>{
-        console.log(ModelDato)
+        console.log(modelDato)
         //dispatch(addCustomer(tempUtente));
     }
     if(misc.head){
@@ -105,7 +105,7 @@ function ModificaForm(props){
                             <input type="radio" name="approvata" value="false"  onClick={(event)=>handleInput(col,event)} />
                             <label for="approvata">No</label><br/></div>
                         }
-                         return <input type="text" placeholder={col} value={ModelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     
                 }

@@ -100,7 +100,7 @@ function ModificaForm(props){
                             <input type="radio" name="approvata" value="false"  onClick={(event)=>handleInput(col,event)} />
                             <label for="approvata">No</label><br/></div>
                         }
-                         return <input type="text" placeholder={col} value={modelDato.col} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     
                 }

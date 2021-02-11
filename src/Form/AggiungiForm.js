@@ -6,17 +6,27 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../Table/CustomerSlice'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
-import {nanoid} from 'nanoid'
+import {fetchCustomerData} from '../Table/CustomerSlice'
+import {fetchMezziData} from '../Table/MezziSlice'
 
 function AggiungiForm(props){
     // Initial Declaration
     const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(()=>fetchCustomerData())
+        dispatch(()=>fetchMezziData())
+    },[])
+    const userData = state.customer.Dati
+    const mezziData = state.mezzi.Dati
     const state = useSelector(state => state)
     let isAdding = true;
     let tempUtente
     tempUtente = { id: undefined, nome :undefined, cognome:undefined, tipoutente:{id:0, tipo:undefined}, password : undefined, nascita : undefined}
     let misc = useSelector(state => state.customer)
     let form  
+
+    console.log(userData)
+    console.log(mezziData)
     
     const handleInput = (col, event)=>{
         switch(col){
@@ -63,12 +73,18 @@ function AggiungiForm(props){
                             <label for="customer">Customer</label><br/></div>
                         }
                         if(col === 'utentePrenotato'){
-                            return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
+                            return <select>
+                            {userData.map(user=>{
+                                return <option value={user.id}>{user.nome}</option>
+                            })}  
+                            </select>
                         }if(col === 'mezzoPrenotato'){
-                            return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
+                            return <select>
+                            {mezziData.map(m=>{
+                                return <option value={m.id}>{m.casaCostr + " " + m.modello}</option>
+                            })}  
+                            </select>   
                         }
-                       /*  return <input type="text" placeholder={col} value={props.dato[col]}></input>      */
-                        
                          return <input type="text" placeholder={col} value={tempUtente[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     

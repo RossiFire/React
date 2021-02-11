@@ -51,7 +51,7 @@ export const PrenotazioniSlice = createSlice({
 })
 
 
-export const SelPrenotazioniById = (state, datoId) =>{return  _.find(state.prenotazioni.Dati, {'id' : parseInt(datoId)})}
+export const SelPrenotazioniById = (state, datoId) =>{return _.find(state.prenotazioni.Dati, {'id' : parseInt(datoId)})}
 export const SelectAllPrenotazioni = state =>{return state.prenotazioni.Dati}
 export const SelectHeader = (state) => state.prenotazioni.header
 

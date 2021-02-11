@@ -54,7 +54,7 @@ export const MezziSlice = createSlice({
     }
 })
 
-export const SelMezzoById = (state, datoId) =>{ state.MezziSlice.Dati.find(dato => dato['id'] === datoId)}
+export const SelMezzoById = (state, datoId) =>{return  _.find(state.mezzi.Dati, {'id' : parseInt(datoId)})}
 export const SelectAllMezzi = state => state.MezziSlice.Dati
 
 export const {MezziReducer} = MezziSlice.actions

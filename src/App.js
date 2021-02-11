@@ -22,6 +22,8 @@ function App() {
           <Route path="/parcoauto" exact component={AppTable} />
           <Route path="/prenotazioni" exact component={AppTable} />
           <Route path="/customer/:id" exact component={ModificaForm} />
+          <Route path="/parcoauto/:id" exact component={ModificaForm} />
+          <Route path="/prenotazioni/:id" exact component={ModificaForm} />
           <Route path="/aggiungi" exact component={AggiungiForm}/>
         </Switch>
       </div>

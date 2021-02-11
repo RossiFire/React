@@ -3,44 +3,67 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../Table/CustomerSlice'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
+import {fetchCustomerData, SelCustomerById} from '../Table/CustomerSlice'
+import {fetchMezziData, SelMezzoById} from '../Table/MezziSlice'
+import {fetchPrenotazioniData, SelPrenotazioniById} from '../Table/PrenotazioniSlice'
 
 function ModificaForm(props){
     // Initial Declaration
     const dispatch = useDispatch()
     const state = useSelector(state => state)
-    let tempUtente = SelCustomerById(state,props.match.params.id) 
-    let misc = useSelector(state => state.customer)
     let form  
-    let [ModelUtente, setDato] = useState(tempUtente)
+    const userData = state.customer.Dati
+    const mezziData = state.mezzi.Dati
+    dispatch(()=>fetchMezziData())
+    dispatch(()=>fetchCustomerData())
+    let misc
+    let tempDato
     
+
         //controllo utente-mezzi-prenotazioni
-        //console.log(props.match.url.split("/")[1])
+        switch(props.match.url.split("/")[1]){
+            case 'customer':
+                misc = state.customer
+                tempDato = SelCustomerById(state,props.match.params.id) 
+                break
+            case 'parcoauto':
+                misc = state.mezzi
+                tempDato = SelMezzoById(state,props.match.params.id) 
+                break
+            case 'prenotazioni':
+                misc = state.prenotazioni
+                tempDato = SelPrenotazioniById(state, props.match.params.id)
+                break
+            default :
+                console.log('non dovrebbe entrare qua')
+                break
+        }
+        let [ModelDato, setDato] = useState(tempDato)
+    
+        console.log(misc)
+        console.log(ModelDato)  
+        console.log(userData)   
+        console.log(userData)
 
     const handleInput = (col, e)=>{
         switch(col){
             case 'tipoutente':
-                if(parseInt(e.target.value) === 1){
-                    ModelUtente[col]['id'] = parseInt(e.target.value)
-                    ModelUtente[col]['tipo'] = "ADMIN"
-                }else{
-                    ModelUtente[col]['id'] = parseInt(e.target.value)
-                    ModelUtente[col]['tipo'] = "CUSTOMER"
-                }
+                    ModelDato[col]['id'] = parseInt(e.target.value)
                 break
             case 'id':
-                ModelUtente[col] = parseInt(e.target.value)
+                    ModelDato[col] = parseInt(e.target.value)
                 break
             default :
-                setDato(e.target.value)
+                ModelDato[col] = e.target.value
                 break
         }
     }
+    
 
     const handleModifica = ()=>{
-        console.log(ModelUtente)
+        console.log(ModelDato)
         //dispatch(addCustomer(tempUtente));
     }
     if(misc.head){
@@ -65,11 +88,24 @@ function ModificaForm(props){
                             <label for="customer">Customer</label><br/></div>
                         }
                         if(col === 'utentePrenotato'){
-                            return <input type="text" placeholder={col} value={props.dato[col]['nome']}></input>   
+                            return <select>
+                            {userData.map(user=>{
+                                return <option value={user.id}>{user.nome}</option>
+                            })}  
+                            </select>
                         }if(col === 'mezzoPrenotato'){
-                            return <input type="text" placeholder={col} value={props.dato[col]['casaCostr'] + " " + props.dato[col]['modello']}></input>   
+                            return <select>
+                            {mezziData.map(m=>{
+                                return <option value={m.id}>{m.casaCostr + " " + m.modello}</option>
+                            })}  
+                            </select>   
+                        }if(col === 'approvata'){
+                            return  <div><input type="radio" name="approvata" value="true"  onClick={(event)=>handleInput(col,event)} />
+                            <label for="approvata">Si</label><br/>
+                            <input type="radio" name="approvata" value="false"  onClick={(event)=>handleInput(col,event)} />
+                            <label for="approvata">No</label><br/></div>
                         }
-                         return <input type="text" placeholder={col} value={ModelUtente[col]} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} value={ModelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     
                 }

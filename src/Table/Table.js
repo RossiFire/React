@@ -8,18 +8,22 @@ import * as _ from 'lodash'
 import {Link} from 'react-router-dom'
 import {nanoid} from 'nanoid'
 
-function Table(){
-
+function Table(props){
     let TB = ''
     let sliceData;
     const dispatch = useDispatch();
     let dt
     let data = []
+    let operazione;
+    if(props.match.url.split("/")[1] === 'customer'){
+        operazione = fetchCustomerData()
+    }else{
+        operazione = fetchCustomerData()
+    }
     useEffect(()=>{
-        dispatch(fetchCustomerData())
+        dispatch(operazione)
     },[])
     data = useSelector(state => state.customer.Dati)
-    
     dt = useSelector(state => state.customer)
 
     if(dt.head){
@@ -29,7 +33,7 @@ function Table(){
             sliceData = data
         }
 
-        /// FUNZIONE PER ORDINARE DA FARE
+    /// FUNZIONE PER ORDINARE DA FARE
 
     function OrderById(){
         console.log(sliceData)

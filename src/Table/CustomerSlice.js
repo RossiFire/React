@@ -15,14 +15,9 @@ export const fetchCustomerData = createAsyncThunk('customer/fetchCustomer', asyn
     return response.data
   })
 
-export const addCustomer = createAsyncThunk('customer/add', utente =>{
-    axios.post("http://localhost:8050/utenti/aggiungi", utente)
-    .then(async ()=>{
-        await axios.get('http://localhost:8050/utenti/customer')
-        .then(response=>{
-            return response
-        })
-    })
+export const addCustomer = createAsyncThunk('customer/add', async utente =>{
+    const response = await axios.post("http://localhost:8050/utenti/aggiungi", utente)
+    return response.data
 })
 
 export const modCustomer = createAsyncThunk('customer/mod', async utente =>{
@@ -55,7 +50,7 @@ export const CustomerSlice = createSlice({
             state.stato = 'failed'
         },
         [addCustomer.fulfilled] : (state,action)=>{
-            state.Dati = action.payload
+            state.Dati.push(action.payload)
         },
         [modCustomer.fulfilled] : (state,action)=>{
             state.Dati.push(action.payload)

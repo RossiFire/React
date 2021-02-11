@@ -11,16 +11,16 @@ import {Link} from 'react-router-dom'
 
 export function AppNavbar(){
     const dispatch = useDispatch()
-    useEffect(()=>{
+/*     useEffect(()=>{
         dispatch(fetchCustomerData())
-    })
+    }) */
     return(
         <div>
             <Navbar expand="sm" className="navbar">
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link><Link to="/"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link></Nav.Link>
+                    <Nav.Link><Link to="/customer"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link></Nav.Link>
                     <Nav.Link><Link><button>Parco auto</button></Link></Nav.Link>
                     <Nav.Link><button onClick={() => dispatch(()=>console.log('o'))}>Prenotazioni</button></Nav.Link>
                 </Nav>

@@ -17,7 +17,10 @@ function App() {
       <div className="App">
       <AppNavbar />
         <Switch>
-          <Route path="/" exact component={AppTable} />
+          {/* <Route path="/" exact component={AppTable} /> */}
+          <Route path="/customer" exact component={AppTable} />
+          <Route path="/parcoauto" exact component={AppTable} />
+          <Route path="/prenotazioni" exact component={AppTable} />
           <Route path="/customer/:id" exact component={ModificaForm} />
           <Route path="/aggiungi" exact component={AggiungiForm}/>
         </Switch>

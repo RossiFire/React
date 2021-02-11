@@ -41,30 +41,25 @@ function ModificaForm(props){
                 break
         } 
 
-    /* modelDato = _.cloneDeep(tempDato) */
-    modelDato = {id :0, nome : '', cognome : '', tipoutente: {id : 0, tipo :''}, nascita : '', password: ''}
+    modelDato = _.cloneDeep(tempDato)
     const handleInput = (col, event) =>{
         console.log(event.target.value)
-        switch(col){
-            case 'tipoutente':
-                    modelDato[col]['id'] = parseInt(event.target.value)
-                break
-            case 'id':
-                    modelDato[col] = parseInt(event.target.value)
-                break
-            default :
+        if(col === 'tipoutente'){
+            modelDato[col]['id'] = parseInt(event.target.value)
+        }else if(col === 'id'){
+            modelDato[col]['id'] = parseInt(event.target.value)
+        }else{
             modelDato[col] = event.target.value
-            break
+            console.log(modelDato)
         }
-        console.log(modelDato)
     }
 
     
     
 
     const handleModifica = ()=>{
-        console.log(modelDato)
         //dispatch(addCustomer(tempUtente));
+        console.log(modelDato)
     }
     if(misc.head){
       form= <div className="form-body">
@@ -105,7 +100,7 @@ function ModificaForm(props){
                             <input type="radio" name="approvata" value="false"  onClick={(event)=>handleInput(col,event)} />
                             <label for="approvata">No</label><br/></div>
                         }
-                         return <input type="text" placeholder={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} value={modelDato.col} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     
                 }
@@ -113,7 +108,7 @@ function ModificaForm(props){
         }    
         {
             <div>
-               <Link to="/"><Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button></Link>
+               <Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button>
                <Link to="/aggiungi"><Button variang="white">Resetta</Button></Link>
             </div>  
         }

@@ -43,6 +43,7 @@ function ModificaForm(props){
     modelDato = _.cloneDeep(tempDato)
     
     const handleInput = (col, event) =>{
+        let modelDato = _.cloneDeep(tempDato)
         console.log(event.target.value)
         if(col === 'tipoutente'){
             modelDato[col]['id'] = parseInt(event.target.value)
@@ -50,7 +51,6 @@ function ModificaForm(props){
             modelDato['id'] = parseInt(event.target.value)
         }else{
             modelDato[col] = event.target.value
-            console.log(modelDato)
         }
     }
 
@@ -58,7 +58,12 @@ function ModificaForm(props){
     
 
     const handleModifica = ()=>{
-        //dispatch(addCustomer(tempUtente));
+        misc.head.map(col=>{
+            if(col === 'tipoutente'){
+                tempDato[col]['id'] =  document.getElementsByName(col).value
+            }
+            tempDato[col] =  document.getElementsByName(col).value
+        })
         console.log(modelDato)
     }
     if(misc.head){
@@ -95,12 +100,12 @@ function ModificaForm(props){
                             })}  
                             </select>   
                         }if(col === 'approvata'){
-                            return  <div><input type="radio" name="approvata" value="true"  onClick={(event)=>handleInput(col,event)} />
+                            return  <div><input type="radio" name="approvata" value="true" name={col} onChange={(event)=>handleInput(col,event)}/>
                             <label for="approvata">Si</label><br/>
-                            <input type="radio" name="approvata" value="false"  onClick={(event)=>handleInput(col,event)} />
+                            <input type="radio" name="approvata" value="false" name={col} onChange={(event)=>handleInput(col,event)}/>
                             <label for="approvata">No</label><br/></div>
                         }
-                         return <input type="text" placeholder={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} name={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
                     }
                     
                 }

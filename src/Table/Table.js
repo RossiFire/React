@@ -45,9 +45,9 @@ function Table(props){
 
     /// FUNZIONE PER ORDINARE
     function OrderById(){
-        console.log(data)
-        data =_.orderBy(data, ['id'],['asc'])
-        console.log(data)
+        console.log(sliceData)
+        sliceData =_.orderBy(sliceData, ['id'],['asc'])
+        console.log(sliceData)
     }
     TB =
     <div>

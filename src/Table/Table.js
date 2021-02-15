@@ -44,7 +44,7 @@ function Table(props){
         }
 
     /// FUNZIONE PER ORDINARE
-    function OrderById(){
+    const OrderById = ()=>{
         console.log(sliceData)
         sliceData =_.orderBy(sliceData, ['id'],['asc'])
         console.log(sliceData)

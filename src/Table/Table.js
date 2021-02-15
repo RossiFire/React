@@ -43,8 +43,7 @@ function Table(props){
             sliceData = data
         }
 
-    /// FUNZIONE PER ORDINARE DA FARE
-
+    /// FUNZIONE PER ORDINARE
     function OrderById(){
         console.log(data)
         data =_.orderBy(data, ['id'],['asc'])

@@ -16,17 +16,17 @@ export const fetchPrenotazioniData = createAsyncThunk('prenotazioni/fetchPrenota
 })
 
 export const addPrenotazione = createAsyncThunk('prenotazione/add', async mezzo =>{
-    const response = await axios.post("http://localhost:8050/prenotazione/aggiungi", mezzo)
+    const response = await axios.post("http://localhost:8050/prenotazioni/aggiungi", mezzo)
     return response.data
 })
 
 export const modPrenotazione = createAsyncThunk('prenotazione/mod', async mezzo =>{
-    const response = await axios.post(`http://localhost:8050/prenotazione/modifica`, mezzo)
+    const response = await axios.post(`http://localhost:8050/prenotazioni/modifica`, mezzo)
     return response.data
 })
 
 export const delPrenotazione = createAsyncThunk('prenotazione/del', async id =>{
-    await axios.get(`http://localhost:8050/prenotazione/elimina/${id}`)
+    await axios.get(`http://localhost:8050/prenotazioni/elimina/${id}`)
 })
 
 export const PrenotazioniSlice = createSlice({
@@ -43,6 +43,11 @@ export const PrenotazioniSlice = createSlice({
         },
         [addPrenotazione.fulfilled] : (state,action)=>{
             state.Dati = state.Dati.push(action.payload)
+        },
+        [modPrenotazione.fulfilled] : (state,action)=>{
+            state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
+            console.log(action.payload)
+            state.Dati.push(action.payload)
         },
         [delPrenotazione.fulfilled] : (state,action)=>{
             state.Dati = _.reject(state.Dati, {'id' : action.meta.arg})

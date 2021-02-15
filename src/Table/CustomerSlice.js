@@ -49,6 +49,8 @@ export const CustomerSlice = createSlice({
             state.Dati.push(action.payload)
         },
         [modCustomer.fulfilled] : (state,action)=>{
+            state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
+            console.log(action.payload)
             state.Dati.push(action.payload)
         },
         [delCustomer.fulfilled] : (state,action)=>{

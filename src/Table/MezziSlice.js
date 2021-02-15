@@ -48,6 +48,10 @@ export const MezziSlice = createSlice({
         [addMezzo.fulfilled] : (state,action)=>{
             state.Dati.push(action.meta.arg)
         },
+        [modMezzo.fulfilled] : (state, action)=>{
+            state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
+            state.Dati.push(action.payload)
+        },
         [delMezzo.fulfilled] : (state,action)=>{
             state.Dati = _.reject(state.Dati, {'id' : action.meta.arg})
         }

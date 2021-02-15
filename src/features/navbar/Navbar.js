@@ -10,9 +10,6 @@ import {Link} from 'react-router-dom'
 
 export function AppNavbar(){
     const dispatch = useDispatch()
-/*     useEffect(()=>{
-        dispatch(fetchCustomerData())
-    }) */
     return(
         <div>
             <Navbar expand="sm" className="navbar">

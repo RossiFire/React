@@ -11,6 +11,7 @@ import {fetchMezziData} from '../Table/MezziSlice'
 
 function AggiungiForm(props){
     // Initial Declaration
+    const state = useSelector(state => state)
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(()=>fetchCustomerData())
@@ -18,7 +19,6 @@ function AggiungiForm(props){
     },[])
     const userData = state.customer.Dati
     const mezziData = state.mezzi.Dati
-    const state = useSelector(state => state)
     let isAdding = true;
     let tempUtente
     tempUtente = { id: undefined, nome :undefined, cognome:undefined, tipoutente:{id:0, tipo:undefined}, password : undefined, nascita : undefined}

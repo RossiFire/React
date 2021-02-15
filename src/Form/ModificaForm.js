@@ -5,9 +5,9 @@ import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
-import {fetchCustomerData, SelCustomerById} from '../Table/CustomerSlice'
-import {fetchMezziData, SelMezzoById} from '../Table/MezziSlice'
-import {fetchPrenotazioniData, SelPrenotazioniById} from '../Table/PrenotazioniSlice'
+import {fetchCustomerData, SelCustomerById, modCustomer} from '../Table/CustomerSlice'
+import {fetchMezziData, SelMezzoById, modMezzo} from '../Table/MezziSlice'
+import {fetchPrenotazioniData, SelPrenotazioniById, modPrenotazione} from '../Table/PrenotazioniSlice'
 
 function ModificaForm(props){
     // Initial Declaration
@@ -20,52 +20,157 @@ function ModificaForm(props){
     dispatch(()=>fetchCustomerData())
     let misc
     let tempDato
-    let modelDato
-
+    let backUrl
         //controllo utente-mezzi-prenotazioni
         switch(props.match.url.split("/")[1]){
             case 'customer':
                 misc = state.customer
                 tempDato = SelCustomerById(state,props.match.params.id) 
+                backUrl = "/customer"
                 break
             case 'parcoauto':
                 misc = state.mezzi
                 tempDato = SelMezzoById(state,props.match.params.id) 
+                backUrl = "/parcoauto"
                 break
             case 'prenotazioni':
                 misc = state.prenotazioni
                 tempDato = SelPrenotazioniById(state, props.match.params.id)
+                backUrl = "/prenotazioni"
                 break
             default :
                 console.log('non dovrebbe entrare qua')
                 break
         } 
-    modelDato = _.cloneDeep(tempDato)
+    let [modelDato, setDato] = useState(tempDato)
+
+
     
-    const handleInput = (col, event) =>{
-        let modelDato = _.cloneDeep(tempDato)
-        console.log(event.target.value)
-        if(col === 'tipoutente'){
-            modelDato[col]['id'] = parseInt(event.target.value)
-        }else if(col === 'id'){
-            modelDato['id'] = parseInt(event.target.value)
-        }else{
-            modelDato[col] = event.target.value
-        }
+    // input changing
+    const handleInput = (event, col) =>{
+        var select
+        var selValue
+        switch(col){
+            case 'tipoutente':
+                select = document.getElementById("tipoutente");
+                selValue = select.value; 
+                setDato(()=>({
+                      ...modelDato,
+                      ['tipoutente'] : {id : parseInt(selValue), tipo : ''}
+                    }))
+                    break;
+            case 'tipomezzo':
+                select = document.getElementById("tipomezzo");
+                selValue = select.value; 
+                setDato(()=>({
+                  ...modelDato,
+                  ['tipomezzo'] : {id : parseInt(selValue), tipo : ''}
+                }))
+                break;
+            case 'utentePrenotato':
+                select = document.getElementById("utentePrenotato");
+                selValue = select.value; 
+                setDato(()=>({
+                  ...modelDato,
+                  ['utentePrenotato'] : {id : parseInt(selValue)}
+                }))
+                break;
+            case 'mezzoPrenotato':
+                select = document.getElementById("mezzoPrenotato");
+                selValue = select.value; 
+                setDato(()=>({
+                  ...modelDato,
+                  ['mezzoPrenotato'] : {id : parseInt(selValue)}
+                }))
+                break;
+            case 'mezzoPrenotato':
+                select = document.getElementById("approvata");
+                selValue = select.value; 
+                setDato(()=>({
+                  ...modelDato,
+                  ['approvata'] : {id : selValue}
+                }))
+                break;
+            default : 
+                setDato(()=>({
+                    ...modelDato,
+                    [col] : event.target.value,
+                }))
+                break;
+            }
     }
 
-    
-    
-
+    // ON submit
     const handleModifica = ()=>{
+        var select;
+        var selValue
         misc.head.map(col=>{
-            if(col === 'tipoutente'){
-                tempDato[col]['id'] =  document.getElementsByName(col).value
+            switch(col){
+                case 'tipoutente':
+                    select = document.getElementById("tipoutente");
+                    selValue = select.value; 
+                    let tipo
+                    if(selValue === 1){
+                        tipo = "CUSTOMER"
+                    }else{
+                        tipo = "ADMIN"
+                    }
+                    setDato(()=>({
+                        ...modelDato,
+                        ['tipoutente'] : {id : parseInt(selValue), tipo : tipo}
+                    }))
+                  break;
+                case 'tipomezzo':
+                    select = document.getElementById("tipomezzo");
+                    selValue = select.value; 
+                    setDato(()=>({
+                      ...modelDato,
+                      ['tipomezzo'] : {id : parseInt(selValue), tipo : ''}
+                    }))
+                    break;
+                case 'utentePrenotato':
+                    select = document.getElementById("utentePrenotato");
+                    selValue = select.value; 
+                    setDato(()=>({
+                      ...modelDato,
+                      ['utentePrenotato'] : {id : parseInt(selValue)}
+                    }))
+                    break;
+                case 'mezzoPrenotato':
+                    select = document.getElementById("mezzoPrenotato");
+                    selValue = select.value; 
+                    setDato(()=>({
+                      ...modelDato,
+                      ['mezzoPrenotato'] : {id : parseInt(selValue)}
+                    }))
+                    break;
+                default : 
+                    setDato(()=>({
+                        ...modelDato,
+                        [col] : document.getElementsByName(col).value
+                    }))
+                    break;
             }
-            tempDato[col] =  document.getElementsByName(col).value
         })
         console.log(modelDato)
+        switch(props.match.url.split("/")[1]){
+            case 'customer':
+                dispatch(modCustomer(modelDato))
+                break;
+            case 'parcoauto':
+                    dispatch(modMezzo(modelDato))
+                break
+            case 'prenotazioni':
+                    dispatch(modPrenotazione(modelDato))
+                break
+            default :
+                console.log('non dovrebbe entrare qua')
+                break;
+        } 
     }
+
+
+
     if(misc.head){
       form= <div className="form-body">
         {
@@ -73,39 +178,37 @@ function ModificaForm(props){
                 if(col !== 'azioni'){
                     if(col !== 'id'){
                         if(col === 'tipomezzo'){
-                            return   <div><input type="radio" name="tipomezzo" value="1" />
-                            <label for="male">Minivan</label><br/>
-                            <input type="radio" name="tipomezzo" value="2" />
-                            <label for="female">Autoveicolo</label><br/>
-                            <input type="radio" name="tipomezzo" value="3" />
-                            <label for="other">Furgone</label>
-                            <input type="radio" name="tipomezzo" value="4" />
-                            <label for="other">SUV</label></div>
+                            return <div><h4>Tipo mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                                <option value="1">Minivan</option>
+                                <option value="2">Autoveicolo</option>
+                                <option value="3">Furgone</option>
+                                <option value="4">Suv</option>
+                            </select></div>
                         }if(col === 'tipoutente'){
-                            return  <div><input type="radio" name="tipoutente" value="1"  onClick={(event)=>handleInput(col,event)} />
-                            <label for="admin">Admin</label><br/>
-                            <input type="radio" name="tipoutente" value="2" onClick={(event)=>handleInput(col,event)}/>
-                            <label for="customer">Customer</label><br/></div>
+                            return <div><h4>Tipo utente</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                                <option value="1" >Admin</option>
+                                <option value="2" >Customer</option>
+                            </select></div>
                         }
                         if(col === 'utentePrenotato'){
-                            return <select>
+                            return <div><h4>Utente</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
                             {userData.map(user=>{
                                 return <option value={user.id}>{user.nome}</option>
                             })}  
-                            </select>
+                            </select></div>
                         }if(col === 'mezzoPrenotato'){
-                            return <select>
+                            return <div><h4>Mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
                             {mezziData.map(m=>{
                                 return <option value={m.id}>{m.casaCostr + " " + m.modello}</option>
                             })}  
-                            </select>   
+                            </select></div>
                         }if(col === 'approvata'){
-                            return  <div><input type="radio" name="approvata" value="true" name={col} onChange={(event)=>handleInput(col,event)}/>
-                            <label for="approvata">Si</label><br/>
-                            <input type="radio" name="approvata" value="false" name={col} onChange={(event)=>handleInput(col,event)}/>
-                            <label for="approvata">No</label><br/></div>
+                            return <div><p>Approvata</p><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            <option value="true" >Si</option>
+                            <option value="false" >No</option>
+                        </select></div>
                         }
-                         return <input type="text" placeholder={col} name={col} value={modelDato[col]} onChange={(event)=>handleInput(col,event)}></input>
+                         return <input type="text" placeholder={col} name={col} value={modelDato[col]} onChange={(event)=>handleInput(event,col)}></input>
                     }
                     
                 }
@@ -113,7 +216,7 @@ function ModificaForm(props){
         }    
         {
             <div>
-               <Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button>
+               <Link to={backUrl}><Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button></Link>
                <Link to="/aggiungi"><Button variang="white">Resetta</Button></Link>
             </div>  
         }

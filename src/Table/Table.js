@@ -84,23 +84,23 @@ function Table(props){
                             case 'customer':
                                 return <td>
                                 <Link to={`/customer/${dato['id']}`}>
-                                    <Button variant="warning">Modifica</Button>
+                                    <Button variant="warning" key={nanoid()}>Modifica</Button>
                                 </Link>
-                                <Button variant="danger" onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
+                                <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
                                 </td>
                             case 'parcoauto':
                                 return <td>
                                 <Link to={`/parcoauto/${dato['id']}`}>
-                                    <Button variant="warning">Modifica</Button>
+                                    <Button variant="warning" key={nanoid()}>Modifica</Button>
                                 </Link>
-                                <Button variant="danger" onClick={()=>dispatch(delMezzo(dato['id']))}>Elimina</Button>
+                                <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delMezzo(dato['id']))}>Elimina</Button>
                                 </td>
                             case 'prenotazioni':
                                 return <td>
                                 <Link to={`/prenotazioni/${dato['id']}`}>
-                                    <Button variant="warning">Modifica</Button>
+                                    <Button variant="warning" key={nanoid()}>Modifica</Button>
                                 </Link>
-                                <Button variant="danger" onClick={()=>dispatch(delPrenotazione(dato['id']))}>Elimina</Button>
+                                <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delPrenotazione(dato['id']))}>Elimina</Button>
                                 </td>
                                 break;
                             default:

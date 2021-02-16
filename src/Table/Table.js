@@ -27,19 +27,12 @@ function Table(props){
     switch(props.match.url.split("/")[1]){
         case 'customer':
             dt = state.customer
-            data = dt.Dati
-            console.log(dt)
             break;
         case 'parcoauto':
             dt = state.mezzi
-            data = dt.Dati
-            console.log(dt)
             break;
         case 'prenotazioni':
-            
             dt = state.prenotazioni
-            data = dt.Dati
-            console.log(dt)
             break;
         default:
             dt = state.customer
@@ -47,13 +40,11 @@ function Table(props){
     }
     
     useEffect(()=>{
-        dispatch(()=>fetchCustomerData())
-        dispatch(()=>fetchMezziData())
-        dispatch(()=>fetchPrenotazioniData())
-    //    setSliceData(data)
-    })
+        data = dt.Dati
+        setSliceData(data)
+    },[dt])
 
-    if(dt.head){
+    if(dt.head){    
 
         /// FUNZIONE PER ORDINARE
         const OrderASCById = ()=>{

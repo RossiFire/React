@@ -15,7 +15,7 @@ import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown} fro
 function Table(props){
     let TB = ''
     let data = []
-    let [sliceData, setSliceData] = useState(data)
+    let [sliceData, setSliceData] = useState(_.cloneDeep(data))
     const dispatch = useDispatch()
     let dt
     let state = useSelector(state => state);
@@ -38,7 +38,9 @@ function Table(props){
     
     useEffect(()=>{
         data = dt.Dati
-        setSliceData(data)
+        console.log(dt.Dati, data)
+        setSliceData(_.cloneDeep(data))
+        console.log(sliceData)
     },[dt])
 
     if(dt.head){    
@@ -49,6 +51,7 @@ function Table(props){
         }
         const OrderDESCById = ()=>{
             setSliceData(_.orderBy(data, ['id'],['desc']))
+
         }
 
         TB =

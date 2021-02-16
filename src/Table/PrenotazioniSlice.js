@@ -42,11 +42,10 @@ export const PrenotazioniSlice = createSlice({
             state.Dati = action.payload;
         },
         [addPrenotazione.fulfilled] : (state,action)=>{
-            state.Dati = state.Dati.push(action.payload)
+            state.Dati.push(action.payload)
         },
         [modPrenotazione.fulfilled] : (state,action)=>{
             state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
-            console.log(action.payload)
             state.Dati.push(action.payload)
         },
         [delPrenotazione.fulfilled] : (state,action)=>{

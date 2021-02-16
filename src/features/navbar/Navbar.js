@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './navbar.css'
 import { useDispatch } from 'react-redux';
-import {Navbar, Nav, Button} from 'react-bootstrap'
+import {Navbar, Nav} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {fetchCustomerData} from '../../Table/CustomerSlice'
 import {fetchMezziData} from '../../Table/MezziSlice'
@@ -16,9 +16,9 @@ export function AppNavbar(){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link><Link to="/customer"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link></Nav.Link>
-                    <Nav.Link><Link to="/parcoauto"><button onClick={() =>dispatch(()=>dispatch(fetchMezziData()))}>Parco auto</button></Link></Nav.Link>
-                    <Nav.Link><Link to="/prenotazioni"><button onClick={() =>dispatch(()=>dispatch(fetchPrenotazioniData()))}>Prenotazioni</button></Link></Nav.Link>
+                    <Link to="/customer"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link>
+                    <Link to="/parcoauto"><button onClick={() =>dispatch(()=>dispatch(fetchMezziData()))}>Parco auto</button></Link>
+                    <Link to="/prenotazioni"><button onClick={() =>dispatch(()=>dispatch(fetchPrenotazioniData()))}>Prenotazioni</button></Link>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>

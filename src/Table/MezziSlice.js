@@ -40,13 +40,13 @@ export const MezziSlice = createSlice({
         },
         [fetchMezziData.fulfilled] : (state,action)=>{
             state.stato = 'success'
-            state.Dati = state.Dati.concat(action.payload);
+            state.Dati = action.payload
         },
         [fetchMezziData.rejected] : (state)=>{
             state.stato = 'failed'
         },
         [addMezzo.fulfilled] : (state,action)=>{
-            state.Dati.push(action.meta.arg)
+            state.Dati.push(action.payload)
         },
         [modMezzo.fulfilled] : (state, action)=>{
             state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
@@ -61,5 +61,4 @@ export const MezziSlice = createSlice({
 export const SelMezzoById = (state, datoId) =>{return  _.find(state.mezzi.Dati, {'id' : parseInt(datoId)})}
 export const SelectAllMezzi = state => state.MezziSlice.Dati
 
-export const {MezziReducer} = MezziSlice.actions
 export default MezziSlice.reducer

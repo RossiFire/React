@@ -14,10 +14,12 @@ function ModificaForm(props){
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     let form  
+    useEffect(()=>{
+        dispatch(fetchMezziData())
+        dispatch(fetchCustomerData())
+    }, [])
     const userData = state.customer.Dati
     const mezziData = state.mezzi.Dati
-    dispatch(()=>fetchMezziData())
-    dispatch(()=>fetchCustomerData())
     let misc
     let tempDato
     let backUrl
@@ -217,7 +219,7 @@ function ModificaForm(props){
         {
             <div>
                <Link to={backUrl}><Button variant="dark" onClick={()=>handleModifica()}>Modifica</Button></Link>
-               <Link to="/aggiungi"><Button variang="white">Resetta</Button></Link>
+               <Link to={"/aggiungi/" + props.match.url.split("/")[1]}><Button variang="white">Resetta</Button></Link>
             </div>  
         }
         </div>

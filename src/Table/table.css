@@ -19,3 +19,7 @@ table tr *{
     padding: 5px;
     margin: 1px;
 }
+
+tr:hover{
+    background-color: rgb(192, 176, 192);
+}

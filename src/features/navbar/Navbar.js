@@ -16,9 +16,9 @@ export function AppNavbar(){
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Link to="/customer"><button onClick={() =>dispatch(()=>dispatch(fetchCustomerData()))}>Customer</button></Link>
-                    <Link to="/parcoauto"><button onClick={() =>dispatch(()=>dispatch(fetchMezziData()))}>Parco auto</button></Link>
-                    <Link to="/prenotazioni"><button onClick={() =>dispatch(()=>dispatch(fetchPrenotazioniData()))}>Prenotazioni</button></Link>
+                    <Link to="/customer"><button>Customer</button></Link>
+                    <Link to="/parcoauto"><button>Parco auto</button></Link>
+                    <Link to="/prenotazioni"><button>Prenotazioni</button></Link>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>

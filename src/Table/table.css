@@ -23,3 +23,31 @@ table tr *{
 tr:hover{
     background-color: rgb(192, 176, 192);
 }
+
+.buttons button{
+    color: red;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    padding: 5px 50px;
+    margin: 2px 5px;
+    font-size: 20px;
+    outline: none !important;
+}
+.buttons{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%
+}
+.buttons button:hover, .buttons button:active{
+    color: white;
+    background-color: rgb(10,10,10);
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.buttons button:focus{
+    color: red;
+    background-color: white;
+}

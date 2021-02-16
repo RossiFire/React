@@ -13,7 +13,9 @@ import {SelCustomerById} from './Table/CustomerSlice'
 import {SelMezzoById} from './Table/MezziSlice'
 import {SelPrenotazioniById} from './Table/PrenotazioniSlice'
 import {useDispatch, connect, useSelector} from 'react-redux'
-
+import CustomerPage from './features/Customer/CustomerPage'
+import MezziPage from './features/Mezzi/MezziPage'
+import PrenotazioniPage from './features/Prenotazioni/PrenotazioniPage'
 
 function App(){
     return (
@@ -22,9 +24,9 @@ function App(){
         <AppNavbar />
           <Switch>
             {/* <Route path="/" exact component={AppTable} /> */}
-            <Route path="/customer" exact component={AppTable} />
-            <Route path="/parcoauto" exact component={AppTable} />
-            <Route path="/prenotazioni" exact component={AppTable} />
+            <Route path="/customer" exact component={CustomerPage} />
+            <Route path="/parcoauto" exact component={MezziPage} />
+            <Route path="/prenotazioni" exact component={PrenotazioniPage} />
             <Route path="/customer/:id" exact component={ModificaForm} />
             <Route path="/parcoauto/:id" exact component={ModificaForm} />
             <Route path="/prenotazioni/:id" exact component={ModificaForm} />

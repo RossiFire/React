@@ -14,51 +14,18 @@ import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown} fro
 
 function Table(props){
     let TB = ''
-    let data = []
-    let [sliceData, setSliceData] = useState(_.cloneDeep(data))
     const dispatch = useDispatch()
-    let dt
-    let state = useSelector(state => state);
-
-    //  Checking Customer-Mezzi-Prenotazioni
-    switch(props.match.url.split("/")[1]){
-        case 'customer':
-            dt = state.customer
-            break;
-        case 'parcoauto':
-            dt = state.mezzi
-            break;
-        case 'prenotazioni':
-            dt = state.prenotazioni
-            break;
-        default:
-            dt = state.customer
-            break;
-    }
-    
-    useEffect(()=>{
-        data = dt.Dati
-        console.log(dt.Dati, data)
-        setSliceData(_.cloneDeep(data))
-        console.log(sliceData)
-    },[dt])
-
+    let dt = props.data
     if(dt.head){    
-
-        /// FUNZIONE PER ORDINARE
-        const OrderASCById = ()=>{
-            setSliceData(_.orderBy(data, ['id'],['asc']))
+ 
+        const handleOrderASC =()=>{
+            props.asc()
         }
-        const OrderDESCById = ()=>{
-            setSliceData(_.orderBy(data, ['id'],['desc']))
-
-        }
-
         TB =
         <div>
             <div className="buttons">
-            <button onClick={()=>OrderASCById()}><FontAwesomeIcon icon={faSortAmountDownAlt} /></button>
-            <button onClick={()=>OrderDESCById()}><FontAwesomeIcon icon={faSortAmountUp} /></button>
+            <button onClick={()=>handleOrderASC()}><FontAwesomeIcon icon={faSortAmountDownAlt} /></button>
+            <button><FontAwesomeIcon icon={faSortAmountUp} /></button>
         </div>
         <table>
             <thead>
@@ -67,7 +34,7 @@ function Table(props){
             </tr>
             </thead>
             <tbody>
-                {sliceData.map((dato) => 
+                {dt.Dati.map((dato) => 
                 <tr key={nanoid()}>
                     {dt.head.map(col =>{
                         if(col === 'tipomezzo'){
@@ -87,7 +54,7 @@ function Table(props){
                             return <td key={nanoid()}>{dato[col].split('T')[0]}</td>
                         }
                         if(col === 'azioni'){
-                            switch(props.match.url.split("/")[1]){
+                            switch(props.url){
                                 case 'customer':
                                     return <td key={nanoid()}>
                                     <Link to={`/customer/${dato['id']}`}>
@@ -103,7 +70,7 @@ function Table(props){
                                     <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delMezzo(dato['id']))}>Elimina</Button>
                                     </td>
                                 case 'prenotazioni':
-                                    return <td key={nanoid}>
+                                    return <td key={nanoid()}>
                                     <Link to={`/prenotazioni/${dato['id']}`}>
                                         <Button variant="warning" key={nanoid()}>Modifica</Button>
                                     </Link>
@@ -111,7 +78,6 @@ function Table(props){
                                     </td>
                                     break;
                                 default:
-                                    dt = state.customer
                                     break;
                             }
                         }

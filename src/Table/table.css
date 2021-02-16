@@ -21,9 +21,11 @@ table tr *{
 }
 
 tr:hover{
-    background-color: rgb(192, 176, 192);
+    background-color: rgb(0, 0, 0);
 }
-
+tr:hover td, th:hover td{
+    color: white;
+}
 .buttons button{
     color: red;
     background-color: rgb(255, 255, 255);
@@ -41,13 +43,13 @@ tr:hover{
     align-items: center;
     width: 100%
 }
-.buttons button:hover, .buttons button:active{
+.buttons button:hover{
     color: white;
     background-color: rgb(10,10,10);
     border: 2px solid rgb(0, 0, 0);
 }
 
-.buttons button:focus{
+.buttons button:active{
     color: red;
     background-color: white;
 }

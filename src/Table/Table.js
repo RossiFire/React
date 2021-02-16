@@ -11,9 +11,6 @@ import {Link} from 'react-router-dom'
 import {nanoid} from 'nanoid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown} from '@fortawesome/free-solid-svg-icons'
-import {fetchCustomerData} from '../Table/CustomerSlice'
-import {fetchMezziData} from '../Table/MezziSlice'
-import {fetchPrenotazioniData} from '../Table/PrenotazioniSlice'
 
 function Table(props){
     let TB = ''

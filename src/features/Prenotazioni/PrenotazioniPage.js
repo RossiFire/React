@@ -17,18 +17,22 @@ function PrenotazioniPage(){
         
 
     const OrderASCById = ()=>{
-        prenotazioniData = _.orderBy(stateData, ['id'],['asc']) 
-        set(prenotazioniData)
-    }
-    const OrderDESCById = ()=>{
-        prenotazioniData = _.orderBy(stateData, ['id'],['desc']) 
-        set(prenotazioniData)
+        set(()=>({
+            ...stateData,
+            ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['asc']),
+        }))
     }
 
+    const OrderDESCById = ()=>{
+            set(()=>({
+                ...stateData,
+                ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['desc']),
+            }))
+        }
 
     return(
         <div>
-        <Table data={prenotazioniData} url={"prenotazioni"}/>
+        <Table data={prenotazioniData} url={"prenotazioni"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
         </div> 
     )
 }

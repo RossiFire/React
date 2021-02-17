@@ -18,17 +18,22 @@ function CustomerPage(){
         
 
     const OrderASCById = ()=>{
-        customerData = _.orderBy(stateData, ['id'],['asc']) 
-        set(customerData)
+        set(()=>({
+            ...stateData,
+            ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['asc']),
+        }))
     }
+
     const OrderDESCById = ()=>{
-        customerData = _.orderBy(stateData, ['id'],['desc']) 
-        set(customerData)
+         set(()=>({
+            ...stateData,
+            ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['desc']),
+        }))
     }
 
     return(
         <div>
-        <Table data={stateData} url={"customer"} asc={OrderASCById}/>
+        <Table data={stateData} url={"customer"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
         </div> 
     )
 }

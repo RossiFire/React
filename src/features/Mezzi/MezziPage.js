@@ -17,18 +17,23 @@ function MezziPage(){
         
 
     const OrderASCById = ()=>{
-        mezziData = _.orderBy(stateData, ['id'],['asc']) 
-        set(mezziData)
-    }
-    const OrderDESCById = ()=>{
-        mezziData = _.orderBy(stateData, ['id'],['desc']) 
-        set(mezziData)
+        set(()=>({
+            ...stateData,
+            ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['asc']),
+        }))
     }
 
+    const OrderDESCById = ()=>{
+         set(()=>({
+            ...stateData,
+            ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['desc']),
+        }))
+        console.log(stateData)
+    }
 
     return(
         <div>
-        <Table data={mezziData} url={"parcoauto"}/>
+        <Table data={mezziData} url={"parcoauto"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
         </div> 
     )
 }

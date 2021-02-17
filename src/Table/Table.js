@@ -17,15 +17,18 @@ function Table(props){
     const dispatch = useDispatch()
     let dt = props.data
     if(dt.head){    
- 
         const handleOrderASC =()=>{
-            props.asc()
+            props.OrderAsc()
         }
+        const handleOrderDESC =()=>{
+            props.OrderDesc()
+        }
+
         TB =
         <div>
             <div className="buttons">
             <button onClick={()=>handleOrderASC()}><FontAwesomeIcon icon={faSortAmountDownAlt} /></button>
-            <button><FontAwesomeIcon icon={faSortAmountUp} /></button>
+            <button onClick={()=>handleOrderDESC()}><FontAwesomeIcon icon={faSortAmountUp} /></button>
         </div>
         <table>
             <thead>

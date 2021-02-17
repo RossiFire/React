@@ -9,11 +9,11 @@ function MezziPage(){
     const dispacth = useDispatch()
     let mezziData
     let [stateData, set] = useState([])
+    mezziData = useSelector(state=> state.mezzi)
     useEffect(()=>{
         dispacth(fetchMezziData())
         set(mezziData)
     },[])
-    mezziData = useSelector(state=> state.mezzi)
         
 
     const OrderASCById = ()=>{
@@ -28,12 +28,11 @@ function MezziPage(){
             ...stateData,
             ['Dati'] :  _.orderBy(stateData.Dati, ['id'],['desc']),
         }))
-        console.log(stateData)
     }
 
     return(
         <div>
-        <Table data={mezziData} url={"parcoauto"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
+        <Table data={stateData} url={"parcoauto"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
         </div> 
     )
 }

@@ -6,15 +6,18 @@ import {fetchCustomerData} from '../../Table/CustomerSlice'
 import * as _ from 'lodash'
 
 
+
 function CustomerPage(){
     const dispacth = useDispatch()
     let customerData
     let [stateData, set] = useState([])
+    customerData = useSelector(state=> state.customer)
+    
     useEffect(()=>{
         dispacth(fetchCustomerData())
         set(customerData)
+        console.log('ECCOMI')
     },[])
-    customerData = useSelector(state=> state.customer)
         
 
     const OrderASCById = ()=>{

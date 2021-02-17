@@ -1,0 +1,17 @@
+.AppButton{
+    border-radius: 0px;
+    background-color: white;
+    font-size: 15px;
+    color: red;
+/*     padding: 5px 20px; */
+    border: none;
+    border: 2px solid black;
+    outline: none;
+}
+
+.AppButton svg{
+    widows: 100%;
+    height: 100%;
+    padding: 0 !important;
+    font-size: 16px;
+}

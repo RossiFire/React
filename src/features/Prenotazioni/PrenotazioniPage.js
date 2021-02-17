@@ -9,11 +9,11 @@ function PrenotazioniPage(){
     const dispacth = useDispatch()
     let prenotazioniData
     let [stateData, set] = useState([])
+    prenotazioniData = useSelector(state=> state.prenotazioni)
     useEffect(()=>{
         dispacth(fetchPrenotazioniData())
         set(prenotazioniData)
     },[])
-    prenotazioniData = useSelector(state=> state.prenotazioni)
         
 
     const OrderASCById = ()=>{
@@ -32,7 +32,7 @@ function PrenotazioniPage(){
 
     return(
         <div>
-        <Table data={prenotazioniData} url={"prenotazioni"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
+        <Table data={stateData} url={"prenotazioni"} OrderAsc={OrderASCById} OrderDesc={OrderDESCById}/>
         </div> 
     )
 }

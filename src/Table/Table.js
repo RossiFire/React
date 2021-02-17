@@ -10,7 +10,8 @@ import * as _ from 'lodash'
 import {Link} from 'react-router-dom'
 import {nanoid} from 'nanoid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown} from '@fortawesome/free-solid-svg-icons'
+import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown, faTrash} from '@fortawesome/free-solid-svg-icons'
+import {AddButton, ModButton} from '../features/Buttons/Buttons'
 
 function Table(props){
     let TB = ''
@@ -60,24 +61,18 @@ function Table(props){
                             switch(props.url){
                                 case 'customer':
                                     return <td key={nanoid()}>
-                                    <Link to={`/customer/${dato['id']}`}>
-                                        <Button variant="warning" key={nanoid()}>Modifica</Button>
-                                    </Link>
-                                    <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delCustomer(dato['id']))}>Elimina</Button>
+                                    <ModButton url={props.url} id={dato['id']} />
+                                    <button variant="danger" key={nanoid()} onClick={()=>dispatch(delCustomer(dato['id']))}><FontAwesomeIcon icon={faTrash} /></button>
                                     </td>
                                 case 'parcoauto':
                                     return <td key={nanoid()}>
-                                    <Link to={`/parcoauto/${dato['id']}`}>
-                                        <Button variant="warning" key={nanoid()}>Modifica</Button>
-                                    </Link>
-                                    <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delMezzo(dato['id']))}>Elimina</Button>
+                                    <ModButton url={props.url} id={dato['id']} />
+                                    <button key={nanoid()} onClick={()=>dispatch(delMezzo(dato['id']))}><FontAwesomeIcon icon={faTrash} /></button>
                                     </td>
                                 case 'prenotazioni':
                                     return <td key={nanoid()}>
-                                    <Link to={`/prenotazioni/${dato['id']}`}>
-                                        <Button variant="warning" key={nanoid()}>Modifica</Button>
-                                    </Link>
-                                    <Button variant="danger" key={nanoid()} onClick={()=>dispatch(delPrenotazione(dato['id']))}>Elimina</Button>
+                                    <ModButton url={props.url} id={dato['id']} />
+                                    <button key={nanoid()} onClick={()=>dispatch(delPrenotazione(dato['id']))}><FontAwesomeIcon icon={faTrash} /></button>
                                     </td>
                                     break;
                                 default:

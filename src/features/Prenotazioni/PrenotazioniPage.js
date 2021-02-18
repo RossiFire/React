@@ -2,19 +2,26 @@ import React, { Component, useEffect, useState } from 'react'
 import AppNavbar from '../navbar/Navbar'
 import Table from '../../Table/Table'
 import { useSelector, useDispatch} from 'react-redux';
-import {fetchPrenotazioniData} from '../../Table/PrenotazioniSlice'
+import {fetchPrenotazioniData} from './PrenotazioniSlice'
+import {fetchCustomerData} from '../Customer/CustomerSlice'
+import {fetchMezziData} from '../Mezzi/MezziSlice'
 import * as _ from 'lodash'
 
 function PrenotazioniPage(){
-    const dispacth = useDispatch()
+    const dispatch = useDispatch()
     let prenotazioniData
     let [stateData, set] = useState([])
     prenotazioniData = useSelector(state=> state.prenotazioni)
     useEffect(()=>{
-        dispacth(fetchPrenotazioniData())
+        dispatch(fetchPrenotazioniData())
+        dispatch(fetchMezziData())
+        dispatch(fetchCustomerData())
         set(prenotazioniData)
     },[])
         
+    useEffect(()=>{
+        set(prenotazioniData)
+    },[prenotazioniData])
 
     const OrderASCById = ()=>{
         set(()=>({

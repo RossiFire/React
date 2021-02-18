@@ -5,9 +5,9 @@ import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
-import {fetchCustomerData, SelCustomerById, modCustomer} from '../Table/CustomerSlice'
-import {fetchMezziData, SelMezzoById, modMezzo} from '../Table/MezziSlice'
-import {fetchPrenotazioniData, SelPrenotazioniById, modPrenotazione} from '../Table/PrenotazioniSlice'
+import {fetchCustomerData, SelCustomerById, modCustomer} from '../features/Customer/CustomerSlice'
+import {fetchMezziData, SelMezzoById, modMezzo} from '../features/Mezzi/MezziSlice'
+import {fetchPrenotazioniData, SelPrenotazioniById, modPrenotazione} from '../features/Prenotazioni/PrenotazioniSlice'
 
 function ModificaForm(props){
     // Initial Declaration
@@ -154,7 +154,6 @@ function ModificaForm(props){
                     break;
             }
         })
-        console.log(modelDato)
         switch(props.match.url.split("/")[1]){
             case 'customer':
                 dispatch(modCustomer(modelDato))

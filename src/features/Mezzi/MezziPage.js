@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react'
 import AppNavbar from '../navbar/Navbar'
 import Table from '../../Table/Table'
 import { useSelector, useDispatch} from 'react-redux';
-import {fetchMezziData, SelMezzoById, modMezzo} from '../../Table/MezziSlice'
+import {fetchMezziData, SelMezzoById, modMezzo} from './MezziSlice'
 import * as _ from 'lodash'
 
 function MezziPage(){
@@ -15,6 +15,9 @@ function MezziPage(){
         set(mezziData)
     },[])
         
+    useEffect(()=>{
+        set(mezziData)
+    },[mezziData])
 
     const OrderASCById = ()=>{
         set(()=>({

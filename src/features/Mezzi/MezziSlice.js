@@ -58,7 +58,10 @@ export const MezziSlice = createSlice({
     }
 })
 
-export const SelMezzoById = (state, datoId) =>{return  _.find(state.mezzi.Dati, {'id' : parseInt(datoId)})}
-export const SelectAllMezzi = state => state.MezziSlice.Dati
+export const SelMezzoById = (state, datoId) =>{
+    return _.find(state.mezzi.Dati, {'id' : parseInt(datoId)})
+}
+export const SelectAllMezzi = state => state.mezzi.Dati
+export const SelectMezziHeader = (state) =>{return state.mezzi.head}
 
 export default MezziSlice.reducer

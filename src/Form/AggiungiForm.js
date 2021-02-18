@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../Table/CustomerSlice'
+import {addCustomer, modCustomer, SelCustomerById, SelectAllCustomer} from '../features/Customer/CustomerSlice'
 import {Link} from 'react-router-dom'
 import * as _ from 'lodash'
-import {fetchCustomerData} from '../Table/CustomerSlice'
-import {fetchMezziData, addMezzo} from '../Table/MezziSlice'
-import { addPrenotazione } from '../Table/PrenotazioniSlice'
+import {fetchCustomerData} from '../features/Customer/CustomerSlice'
+import {fetchMezziData, addMezzo} from '../features/Mezzi/MezziSlice'
+import { addPrenotazione } from '../features/Prenotazioni/PrenotazioniSlice'
 
 function AggiungiForm(props){
     // Initial Declaration
@@ -70,7 +70,6 @@ function AggiungiForm(props){
     }
 
     const handleAggiunta =()=>{
-        console.log(tempDato)
         dispatch(addFunction)
     }
     if(misc.head){

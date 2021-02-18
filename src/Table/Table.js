@@ -2,9 +2,9 @@ import React, { Component, useEffect, useState } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {delCustomer} from '../Table/CustomerSlice'
-import {delMezzo} from '../Table/MezziSlice'
-import {delPrenotazione} from '../Table/PrenotazioniSlice'
+import {delCustomer} from '../features/Customer/CustomerSlice'
+import {delMezzo} from '../features/Mezzi/MezziSlice'
+import {delPrenotazione} from '../features/Prenotazioni/PrenotazioniSlice'
 import './table.css'
 import * as _ from 'lodash'
 import {Link} from 'react-router-dom'
@@ -12,6 +12,7 @@ import {nanoid} from 'nanoid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faSortAmountDownAlt, faSortAmountUp, faSortAlphaUp, faSortAlphaDown, faTrash} from '@fortawesome/free-solid-svg-icons'
 import {AddButton, ModButton} from '../features/Buttons/Buttons'
+import Popup from '../features/InfoPopUp/Popup'
 
 function Table(props){
     let TB = ''
@@ -30,6 +31,8 @@ function Table(props){
             <div className="buttons">
             <button onClick={()=>handleOrderASC()}><FontAwesomeIcon icon={faSortAmountDownAlt} /></button>
             <button onClick={()=>handleOrderDESC()}><FontAwesomeIcon icon={faSortAmountUp} /></button>
+            <AddButton url={props.url}/>
+            
         </div>
         <table>
             <thead>
@@ -44,10 +47,10 @@ function Table(props){
                         if(col === 'tipomezzo'){
                             return <td key={nanoid()}>{dato[col]['tipo']}</td>
                         }if(col === 'utentePrenotato'){
-                            return <td key={nanoid()}>{dato[col]['nome']}</td>
+                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]['id']} />{dato[col]['nome']}</td>
                         }
                         if(col === 'mezzoPrenotato'){
-                            return <td key={nanoid()}>{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]['id']} />{dato[col]['casaCostr']} {dato[col]['modello']}</td>
                         }if(col === 'approvata'){
                             if(dato[col])
                                 return <td key={nanoid()}>Si</td>

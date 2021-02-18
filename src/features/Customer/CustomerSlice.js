@@ -50,7 +50,6 @@ export const CustomerSlice = createSlice({
         },
         [modCustomer.fulfilled] : (state,action)=>{
             state.Dati = _.reject(state.Dati, {'id' : action.payload['id']})
-            console.log(action.payload)
             state.Dati.push(action.payload)
         },
         [delCustomer.fulfilled] : (state,action)=>{
@@ -61,6 +60,6 @@ export const CustomerSlice = createSlice({
 
 export const SelCustomerById = (state, datoId) =>{return  _.find(state.customer.Dati, {'id' : parseInt(datoId)})}
 export const SelectAllCustomer = state =>{return state.customer.Dati}
-export const SelectHeader = (state) => state.head
+export const SelectCustomerHeader = (state) =>{return state.customer.head}
 
 export default CustomerSlice.reducer

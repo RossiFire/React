@@ -3,9 +3,9 @@ import './navbar.css'
 import { useDispatch } from 'react-redux';
 import {Navbar, Nav} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {fetchCustomerData} from '../../Table/CustomerSlice'
-import {fetchMezziData} from '../../Table/MezziSlice'
-import {fetchPrenotazioniData} from '../../Table/PrenotazioniSlice'
+import {fetchCustomerData} from '../Customer/CustomerSlice'
+import {fetchMezziData} from '../Mezzi/MezziSlice'
+import {fetchPrenotazioniData} from '../Prenotazioni/PrenotazioniSlice'
 import {Link} from 'react-router-dom'
 import CustomerPage from '../Customer/CustomerPage'
 

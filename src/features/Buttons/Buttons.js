@@ -6,7 +6,7 @@ import './buttons.css'
 
 function AddButton(props){
     return(
-        <Link to={`/aggiungi/${props.url}`}><button className="AppButton" key={nanoid()}><FontAwesomeIcon icon={faSortAmountDownAlt} /></button></Link>
+        <Link to={`/aggiungi/${props.url}`}><button className="AppButton" key={nanoid()}><FontAwesomeIcon icon={faPlusSquare} /></button></Link>
     )
 }
 

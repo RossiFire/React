@@ -2,9 +2,10 @@ import React, { Component, useEffect, useState } from 'react'
 import AppNavbar from '../navbar/Navbar'
 import Table from '../../Table/Table'
 import { useSelector, useDispatch} from 'react-redux';
-import {fetchCustomerData} from '../../Table/CustomerSlice'
+import {fetchCustomerData} from './CustomerSlice'
 import * as _ from 'lodash'
-
+import Popup from '../InfoPopUp/Popup'
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 
 function CustomerPage(){
@@ -16,8 +17,11 @@ function CustomerPage(){
     useEffect(()=>{
         dispacth(fetchCustomerData())
         set(customerData)
-        console.log('ECCOMI')
     },[])
+
+    useEffect(()=>{
+        set(customerData)
+    },[customerData])
         
 
     const OrderASCById = ()=>{

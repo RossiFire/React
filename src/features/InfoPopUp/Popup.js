@@ -3,31 +3,33 @@ import {SelCustomerById, SelectCustomerHeader, fetchCustomerData} from '../Custo
 import {SelMezzoById, SelectMezziHeader, fetchMezziData} from '../Mezzi/MezziSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import {Button, Modal} from 'react-bootstrap'
+import {nanoid} from 'nanoid'
+import '../InfoPopUp/popup.css'
 
 function Popup(props){
     let state = useSelector(state=> state)
     let dato
     let head;
-    const dispatch = useDispatch()
     let title
-  
-        useEffect(()=>{
+    let subtitle
+
           switch(props.tipo){
             case 'utentePrenotato':
-                dato = SelCustomerById(state, props.id)
-                console.log(dato)
+                dato = props.id
                 head = SelectCustomerHeader(state)
-                title = <p>titolo</p>
+                title = <p key={nanoid()}>{dato['nome'] + " " + dato['cognome']}</p>
+                subtitle = <h6><i>Utente</i></h6>
                 break;
             case 'mezzoPrenotato':
-                dato = SelMezzoById(state,props.id)
-                console.log(dato)
+                dato = props.id
                 head = SelectMezziHeader(state)
-                title = <p>titolo</p>
+                title = <p key={nanoid()}>{dato['casaCostr'] + " " + dato['modello']}</p>
+                subtitle = <h6><i>Veicolo</i></h6>
                 break;
           }
-        },[])
-        
+
+          
+
         
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -39,9 +41,9 @@ function Popup(props){
         {head && head.map(col => {
             if(col !== 'azioni'){
                 if (col === 'tipoutente' || col === 'tipomezzo'){
-                    return <p><b>{col}:</b>{dato[col]['tipo']}</p>
+                    return <p key={nanoid()}><b key={nanoid()} >{col}: </b>{dato[col]['tipo']}</p>
                 }else{
-                  return <p><b>{col}:</b>{dato[col]}</p>
+                  return <p key={nanoid()}><b key={nanoid()}>{col}: </b>{dato[col]}</p>
                 }
             }
         })}
@@ -49,22 +51,20 @@ function Popup(props){
 
     return(
         <>
-        <Button variant="primary" onClick={handleShow}>
-            Non va
+        <Button onClick={handleShow} className="modalBtn">
+            {title}
         </Button>
         <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>agniim</Modal.Title>
+          <Modal.Header>
+            <Modal.Title>{title}
+            {subtitle}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
               {tb}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="danger" onClick={handleClose}>
               Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
             </Button>
           </Modal.Footer>
         </Modal>

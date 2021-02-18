@@ -47,10 +47,10 @@ function Table(props){
                         if(col === 'tipomezzo'){
                             return <td key={nanoid()}>{dato[col]['tipo']}</td>
                         }if(col === 'utentePrenotato'){
-                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]['id']} />{dato[col]['nome']}</td>
+                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]} /></td>
                         }
                         if(col === 'mezzoPrenotato'){
-                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]['id']} />{dato[col]['casaCostr']} {dato[col]['modello']}</td>
+                            return <td key={nanoid()}><Popup tipo={col} id={dato[col]} /></td>
                         }if(col === 'approvata'){
                             if(dato[col])
                                 return <td key={nanoid()}>Si</td>

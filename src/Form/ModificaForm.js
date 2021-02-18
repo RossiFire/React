@@ -85,12 +85,12 @@ function ModificaForm(props){
                   ['mezzoPrenotato'] : {id : parseInt(selValue)}
                 }))
                 break;
-            case 'mezzoPrenotato':
+            case 'approvata':
                 select = document.getElementById("approvata");
                 selValue = select.value; 
                 setDato(()=>({
                   ...modelDato,
-                  ['approvata'] : {id : selValue}
+                  ['approvata'] :  !!selValue
                 }))
                 break;
             default : 
@@ -100,6 +100,7 @@ function ModificaForm(props){
                 }))
                 break;
             }
+            console.log(modelDato)
     }
 
     // ON submit
@@ -179,32 +180,32 @@ function ModificaForm(props){
                 if(col !== 'azioni'){
                     if(col !== 'id'){
                         if(col === 'tipomezzo'){
-                            return <div><h4>Tipo mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            return <div><h4>Tipo mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)} value={modelDato[col]['id']}>
                                 <option value="1">Minivan</option>
                                 <option value="2">Autoveicolo</option>
                                 <option value="3">Furgone</option>
                                 <option value="4">Suv</option>
                             </select></div>
                         }if(col === 'tipoutente'){
-                            return <div><h4>Tipo utente</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            return <div><h4>Tipo utente</h4><select id={col} onChange={(event)=>handleInput(event,col)} value={modelDato[col]['id']}>
                                 <option value="1" >Admin</option>
                                 <option value="2" >Customer</option>
                             </select></div>
                         }
                         if(col === 'utentePrenotato'){
-                            return <div><h4>Utente</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            return <div><h4>Utente</h4><select id={col} onChange={(event)=>handleInput(event,col)} value={modelDato[col]['id']}>
                             {userData.map(user=>{
                                 return <option value={user.id}>{user.nome}</option>
                             })}  
                             </select></div>
                         }if(col === 'mezzoPrenotato'){
-                            return <div><h4>Mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            return <div><h4>Mezzo</h4><select id={col} onChange={(event)=>handleInput(event,col)} value={modelDato[col]['id']}>
                             {mezziData.map(m=>{
                                 return <option value={m.id}>{m.casaCostr + " " + m.modello}</option>
                             })}  
                             </select></div>
                         }if(col === 'approvata'){
-                            return <div><p>Approvata</p><select id={col} onChange={(event)=>handleInput(event,col)}>
+                            return <div><p>Approvata</p><select id={col} onChange={(event)=>handleInput(event,col)} value={modelDato[col]}>
                             <option value="true" >Si</option>
                             <option value="false" >No</option>
                         </select></div>

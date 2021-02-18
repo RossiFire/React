@@ -1,9 +1,40 @@
-.popup{
-    position: absolute;
-    height: 200px;
-    width: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: teal;
+.modal-content{
+    background-color: rgb(198, 211, 211);
+    border-radius: 0px;
+    border: 2px solid black;
+    padding: 0;
+    align-items: center;
+    text-align: center;
 }
+.modal-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.modalBtn{
+    border: none;
+    background-color: transparent;
+    color: red;
+    padding: 0;
+    cursor: pointer;
+}
+
+.modalBtn:active, .modalBtn:hover{
+    outline: none;
+    box-shadow: none;
+    background-color: rgba(128, 128, 128, 0.274);
+}
+.modalBtn:active{
+    outline: none;
+    box-shadow: none;
+    background-color: rgba(128, 128, 128, 0.274);
+}
+.modalBtn:focus{
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    color: red;
+}
+
